@@ -1,0 +1,25 @@
+version: "3.0"
+services:
+    tse_certificados_api_prod:
+      container_name: tse_certificados_api_prod
+      build:
+        context: .
+      image: tse_certificados_api_prod
+      restart: unless-stopped
+      ports:
+      - "3006:3006"
+      networks:
+      - default
+      environment:
+        - BD_URL=jdbc:oracle:thin:@//192.168.79.134:1521/WEBCP
+        - BD_USER=WEBCERTIFICACION
+        - BD_PASSWORD=TDtu5#43A
+        - SSO_API_URL=http://192.168.79.67:9762
+        - FILES_API_URL=api.tse.org.gt/archivo
+        - CERTIFICATE_API_URL=http://192.168.79.131:3003
+        - CERTIFICATE_SIGN_URL=api.tse.org.gt/firma
+        - REQUEST_ROUTE=certificado_trabajador_solicitudes
+networks:
+  default:
+    external:
+      name: tse_internal
