@@ -7,7 +7,7 @@ services:
       image: tse_padron_api_dev
       restart: unless-stopped
       ports:
-      - "5004:3006"
+      - "5004:5004"
       networks:
       - default
       environment:
