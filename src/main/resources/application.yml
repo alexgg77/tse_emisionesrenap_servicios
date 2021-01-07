@@ -66,4 +66,4 @@ app:
       - myandroidapp://oauth2/redirect
       - myiosapp://oauth2/redirect
 server:
-    port: 3006
+    port: 5004
