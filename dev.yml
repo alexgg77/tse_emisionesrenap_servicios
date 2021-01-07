@@ -1,13 +1,13 @@
 version: "3.0"
 services:
-    tse_certificados_api_dev:
-      container_name: tse_certificados_api_dev
+    tse_padron_api_dev:
+      container_name: tse_padron_api_dev
       build:
         context: .
-      image: tse_certificados_api_dev
+      image: tse_padron_api_dev
       restart: unless-stopped
       ports:
-      - "3006:3006"
+      - "5004:3006"
       networks:
       - default
       environment:

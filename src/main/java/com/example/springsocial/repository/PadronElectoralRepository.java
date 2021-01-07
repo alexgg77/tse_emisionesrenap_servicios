@@ -1,5 +1,7 @@
 package com.example.springsocial.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -40,8 +42,16 @@ public interface PadronElectoralRepository extends CrudRepository<Company, Integ
 			+ "             and g.codmun = 0  "
 			+ "             and h.coddep = f.depvecindad "
 			+ "             and h.codmun = f.munvecindad",nativeQuery = true)
-	Persona listarDatos(@Param("cui") String cui);
 	
+	
+		/*Persona listarDatos(@Param("cui") String cui);*/
+	List<String> listUserData(@Param("cui") String cui);
+	
+	@Query(value = "select a.idop,b.siglas,b.nombreop from tafiliados a,torgpoliticas b"
+			+ "                 where a.nroboleta=:boleta"
+			+ "                 and a.idop=b.idop",nativeQuery = true)
+	
+	List<String> validateAfiliation(@Param("boleta") String boleta);
 }
 
 
