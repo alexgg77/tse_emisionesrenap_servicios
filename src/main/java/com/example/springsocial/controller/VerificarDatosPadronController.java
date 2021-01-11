@@ -40,7 +40,7 @@ public class VerificarDatosPadronController {
 			
 			if (list.size()>1) {
 				splitData = list.get(0).toString().split(",");	
-				jsonResponse.put("codStatus", splitData[0]+splitData[1]);
+				jsonResponse.put("name", splitData[0]+" "+splitData[1]);
 				jsonResponse.put("codStatus", splitData[2]);
 				jsonResponse.put("descripcion", splitData[3]);
 				jsonResponse.put("nroCedula1", splitData[4]);
@@ -48,7 +48,7 @@ public class VerificarDatosPadronController {
 				jsonResponse.put("nomDepto", splitData[6]);
 				jsonResponse.put("nomMupio", splitData[7]);
 				jsonResponse.put("cuiDpi", splitData[8]);
-				jsonResponse.put("cuiDpi", splitData[10]);
+				jsonResponse.put("nomBoleta", splitData[10]);
 				nroBoleta =  splitData[10];
 				
 			
