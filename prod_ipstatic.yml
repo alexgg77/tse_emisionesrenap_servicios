@@ -9,7 +9,8 @@ services:
       ports:
       - "5004:5004"
       networks:
-      - default
+        default:
+          ipv4_address: 172.24.0.6
       environment:
         - BD_URL=jdbc:oracle:thin:@//192.168.79.134:1521/WEBCP
         - BD_USER=WEBCERTIFICACION
