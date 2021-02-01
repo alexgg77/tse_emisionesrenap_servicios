@@ -55,7 +55,7 @@ public class VerificarDatosPadronController {
 				
 
 			}else {
-				return new RestResponse(null,new CustomException("El Usuario buscado no esta empadronado o el DPI ingresado es incorrecto, no se pueden obtener los datos"
+				return new RestResponse(null,new CustomException("CUI NO EMPADRONADO O INCORRECTO"
 						+ "",ErrorCode.REST_CREATE,this.getClass().getSimpleName(),0));
 
 			}
