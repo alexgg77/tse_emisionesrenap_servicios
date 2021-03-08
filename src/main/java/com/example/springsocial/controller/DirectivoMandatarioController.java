@@ -21,7 +21,7 @@ import com.example.springsocial.tools.RestResponse;
 
 @SuppressWarnings({"rawtypes","unchecked"})
 @RestController
-@RequestMapping("directivoMandatario")
+@RequestMapping("consultaDirectivoMandatario")
 public class DirectivoMandatarioController {
 	@Autowired
 	private DirectivoOMandatarioRepository repository;	  	
@@ -39,21 +39,13 @@ public class DirectivoMandatarioController {
 			
 			if (!list.isEmpty()) {
 				splitData = list.get(0).toString().split(",");	
-				jsonResponse.put("name", splitData[0]);
-				jsonResponse.put("idOrganizacion", splitData[1]);
-				jsonResponse.put("siglas", splitData[2]);
-				jsonResponse.put("departamento", splitData[3]);
-				jsonResponse.put("municipio", splitData[4]);
-				jsonResponse.put("direccion", splitData[5]);
-				jsonResponse.put("telefono", splitData[6]);
-				jsonResponse.put("email", splitData[7]);
-				jsonResponse.put("representanteLegal", splitData[8]);
-				jsonResponse.put("fase", splitData[9]);
-				jsonResponse.put("estado", splitData[10]);
+				jsonResponse.put("cui", splitData[0]);
+				jsonResponse.put("nroboleta", splitData[1]);
+				jsonResponse.put("nombre", splitData[2]);
+				jsonResponse.put("status", splitData[3]);
+				jsonResponse.put("cargo", splitData[4]);
+		
 
-				String siglas = splitData[2].trim();
-				
-				System.out.println(siglas);
 				
 
 			}else {
