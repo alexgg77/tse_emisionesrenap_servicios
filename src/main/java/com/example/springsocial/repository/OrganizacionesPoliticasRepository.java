@@ -16,7 +16,7 @@ import com.example.springsocial.model.OrganizacionesPoliticas;
 public interface OrganizacionesPoliticasRepository extends JpaRepository<OrganizacionesPoliticas, String> 
 {   
 
-	@Query(value = "select nombreop as nombre, '' as idop, siglas, d1.deslarga as departamento, d2.deslarga as municipio," 
+	@Query(value = "select nombreop as nombre, a.idop, siglas, d1.deslarga as departamento, d2.deslarga as municipio," 
 			+"decode(o.direccion,null,'', o.direccion || decode(o.nrocasa,null,' ',o.nrocasa) || decode(o.nrozona,null,'',' ZONA ' || o.nrozona)) as direccion,"
 			+"telefono, email, p.nom1 || ' ' || decode(p.nom2,null,'',p.nom2 || ' ')  ||p.ape1 || decode(p.ape2,null,'',' ' || p.ape2) || decode(trim(p.ape3),null,'',' DE ' || p.ape3) as REPRESENTANTELEGAL,"
 			+"upper(r1.descripcion) as fase , upper(r2.descripcion) as estado from tpadron p, tdpi d, tafiliados a, torgpoliticas o, trefdepmun d1, trefdepmun d2, trefstatusop r1, trefstatusop r2 "
