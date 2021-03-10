@@ -18,7 +18,7 @@ public interface DirectivoOMandatarioRepository extends JpaRepository<Organizaci
 {   
 
 	
-	@Query(value ="	SELECT dpi.cui, p.nroboleta, p.nom1||' '||p.nom2||' '||p.ape1||' '||p.ape2||' '||p.ape3 as NOMBRE, p.status, g.flagstatus, "
+	@Query(value ="	SELECT dpi.cui, p.nroboleta, p.nom1||' '||p.nom2||' '||p.ape1||' '||p.ape2||' '||p.ape3 as NOMBRE, p.status, "
 			+"(select count (*) from(SELECT a.nroboleta FROM tcomitedelegados A, TREFDEPMUN B,TREFDEPMUN C,torgpoliticas d,ttempopasam e,"
 	        +" tasamblea f,"
 	        +" tdpi  WHERE "
@@ -39,11 +39,9 @@ public interface DirectivoOMandatarioRepository extends JpaRepository<Organizaci
 			+"	) as CARGO "
 			+"	FROM "
 			+"	tpadron p, "
-			+"	tdpi dpi, "
-			+"	tafiliados g "
+			+"	tdpi dpi "
 			+"	WHERE "
 			+"	p.nroboleta=dpi.nroboleta "
-			+"	and dpi.nroboleta = g.nroboleta"
 			+"	and dpi.cui= :cui ",nativeQuery = true)
 	
 	
