@@ -26,7 +26,7 @@ public class VerificarDatosPadronController {
 	@Autowired
 	private PadronElectoralRepository repository;	  	
 	
-	@GetMapping("verificarEmpadronamiento/{cui}")
+	@GetMapping("verificarAfiliacion/{cui}")
     public RestResponse openFile(@CurrentUser UserPrincipal userPrincipal, 
     		HttpServletRequest request,
     		@PathVariable String cui) throws Exception {
@@ -47,13 +47,9 @@ public class VerificarDatosPadronController {
 				jsonResponse.put("nroCedula2", splitData[5]);
 				jsonResponse.put("nomDepto", splitData[6]);
 				jsonResponse.put("nomMupio", splitData[7]);
-				jsonResponse.put("nomComu", splitData[8]);
-				jsonResponse.put("direccionComp", splitData[9]);
-				jsonResponse.put("numEmpadro", splitData[10]);
-				jsonResponse.put("fecInscri",splitData[12]);
-				jsonResponse.put("fecModif",splitData[13]);
-				jsonResponse.put("nroBoleta", splitData[14]);
-				nroBoleta =  splitData[14];
+				jsonResponse.put("cuiDpi", splitData[8]);
+				jsonResponse.put("nomBoleta", splitData[10]);
+				nroBoleta =  splitData[10];
 				
 			
 				
