@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.springsocial.api.ApiFiles;
 import com.example.springsocial.crud.ObjectSetGet;
 import com.example.springsocial.error.CustomException;
 import com.example.springsocial.error.ErrorCode;
@@ -19,6 +20,7 @@ import com.example.springsocial.repository.OrganizacionesPoliticasRepository;
 import com.example.springsocial.repository.PadronElectoralRepository;
 import com.example.springsocial.security.CurrentUser;
 import com.example.springsocial.security.UserPrincipal;
+import com.example.springsocial.tools.ApiResponseGetValuesTools;
 import com.example.springsocial.tools.RestResponse;
 
 @SuppressWarnings({"rawtypes","unchecked"})
@@ -27,6 +29,9 @@ import com.example.springsocial.tools.RestResponse;
 public class DatosOrganizacionesPoliticasController {
 	@Autowired
 	private OrganizacionesPoliticasRepository repository;	  	
+	private ApiFiles apiFiles = new ApiFiles();
+	private ApiResponseGetValuesTools responseTools = new ApiResponseGetValuesTools();
+	private String base64Image;
 	
 	@GetMapping("list/{cui}")
     public RestResponse openFile(@CurrentUser UserPrincipal userPrincipal, 
@@ -36,6 +41,7 @@ public class DatosOrganizacionesPoliticasController {
 		JSONObject jsonResponse = new JSONObject();
 		String nroBoleta, splitData[];
 		RestResponse response = new RestResponse();
+		String base64=null;
 		try {
 			List list= repository.listUserData(cui);
 			
@@ -54,9 +60,21 @@ public class DatosOrganizacionesPoliticasController {
 				jsonResponse.put("estado", splitData[10]);
 
 				String siglas = splitData[2].trim();
-				
-				System.out.println(siglas);
-				
+				String id = splitData[1];
+				if (id != null || id != "") {
+					apiFiles.clearParms();
+					apiFiles.setGetPath("partidos_politicos","logos", id+".jpg");
+					apiFiles.sendGet();
+					//jsonResponse.put("base64", apiFiles.getRestResponse());
+					responseTools.setApiResponse(apiFiles.getRestResponse());
+					responseTools.setValue("base64");
+					responseTools.getJsonValue();
+					this.base64Image=responseTools.getReturnedValue();
+					System.out.println(	this.base64Image);
+					jsonResponse.put("base64", this.base64Image);
+
+				}
+
 
 			}else {
 				return new RestResponse(null,new CustomException("CUI NO ASOCIADO A NINGUNA ORGANIZACIÓN POLITICA"
