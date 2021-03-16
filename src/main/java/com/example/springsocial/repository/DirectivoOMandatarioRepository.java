@@ -26,7 +26,7 @@ public interface DirectivoOMandatarioRepository extends JpaRepository<Organizaci
 	+"	p.nroboleta,"
 	+"	p.nom1||' '||p.nom2||' '||p.ape1||' '||p.ape2||' '||p.ape3 as NOMBRE,"
 	+"	p.status," 
-	+"	NVL(afi.flagstatus,-1) as FLAGSTATUS,"
+	+"	NVL(afi.flagstatus, null) as FLAGSTATUS,"
 	+"	(select count (*)  AS TOTALCARGOS from"
 	+"	("
 	+	"SELECT"
