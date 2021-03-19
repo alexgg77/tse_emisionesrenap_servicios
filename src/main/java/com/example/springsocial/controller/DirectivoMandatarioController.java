@@ -50,7 +50,7 @@ public class DirectivoMandatarioController {
 				
 
 			}else {
-				return new RestResponse(null,new CustomException("CUI NO ASOCIADO A NINGUNA ORGANIZACIÓN POLITICA"
+				return new RestResponse(null,new CustomException("CUI NO EMPADRONADO Y NO AFILIADO A UNA ORGANIZACIÓN POLÍTICA"
 						+ "",ErrorCode.REST_CREATE,this.getClass().getSimpleName(),0));
 
 			}
