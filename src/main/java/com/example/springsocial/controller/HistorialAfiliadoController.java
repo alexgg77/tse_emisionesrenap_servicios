@@ -14,17 +14,17 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.springsocial.crud.ObjectSetGet;
 import com.example.springsocial.error.CustomException;
 import com.example.springsocial.error.ErrorCode;
-import com.example.springsocial.repository.DirectivoOMandatarioRepository;
+import com.example.springsocial.repository.HistorialAfiliadoRepository;
 import com.example.springsocial.security.CurrentUser;
 import com.example.springsocial.security.UserPrincipal;
 import com.example.springsocial.tools.RestResponse;
 
 @SuppressWarnings({"rawtypes","unchecked"})
 @RestController
-@RequestMapping("consultaDirectivoMandatario")
-public class DirectivoMandatarioController {
+@RequestMapping("consultaHistorialAfiliado")
+public class HistorialAfiliadoController {
 	@Autowired
-	private DirectivoOMandatarioRepository repository;	  	
+	private HistorialAfiliadoRepository repository;	  	
 	
 	@GetMapping("list/{cui}")
     public RestResponse openFile(@CurrentUser UserPrincipal userPrincipal, 
@@ -41,16 +41,26 @@ public class DirectivoMandatarioController {
 				splitData = list.get(0).toString().split(",");	
 				jsonResponse.put("cui", splitData[0]);
 				jsonResponse.put("nroboleta", splitData[1]);
-				jsonResponse.put("nombre", splitData[2]);
-				jsonResponse.put("status", splitData[3]);
-				jsonResponse.put("flagAfiliado", splitData[4]);
-				jsonResponse.put("cargo", splitData[5]);
+				jsonResponse.put("organizacionPolitica", splitData[2]);
+				jsonResponse.put("siglas", splitData[3]);
+				jsonResponse.put("fechaAfiliacion", splitData[4]);
+				jsonResponse.put("hoja", splitData[5]);
+				jsonResponse.put("linea", splitData[6]);
+				jsonResponse.put("fechaOperacion", splitData[7]);
+				jsonResponse.put("fechaRecepcion", splitData[8]);
+				jsonResponse.put("fechaRenuncia", splitData[9]);
+				jsonResponse.put("documentoRenuncia", splitData[10]);
+				jsonResponse.put("fechaDeBaja", splitData[11]);
+				
+				
+				
+				
 		
 
 				
 
 			}else {
-				return new RestResponse(null,new CustomException("CUI NO EMPADRONADO O INCORRECTO"
+				return new RestResponse(null,new CustomException("No tiene historial de renuncias o cui incorrecto"
 						+ "",ErrorCode.REST_CREATE,this.getClass().getSimpleName(),0));
 
 			}
