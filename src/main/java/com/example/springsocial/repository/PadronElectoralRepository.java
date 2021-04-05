@@ -47,7 +47,7 @@ public interface PadronElectoralRepository extends CrudRepository<Company, Integ
 		/*Persona listarDatos(@Param("cui") String cui);*/
 	List<String> listUserData(@Param("cui") String cui);
 	
-	@Query(value = "select a.idop,b.siglas,b.nombreop from tafiliados a,torgpoliticas b"
+	@Query(value = "select a.idop,b.siglas,b.nombreop,a.fecafiliacion from tafiliados a,torgpoliticas b"
 			+ "                 where a.nroboleta=:boleta"
 			+ "                 and a.idop=b.idop",nativeQuery = true)
 	

@@ -70,6 +70,7 @@ public class VerificarDatosPadronController {
 			jsonResponse.put("iDop", afiliationSplit[0]);
 			jsonResponse.put("siglas", afiliationSplit[1]);
 			jsonResponse.put("nombreOP", afiliationSplit[2]);
+			jsonResponse.put("fechaAfiliacion", afiliationSplit[3]);
 			jsonResponse.put("afiliacion", "AFILIADO");
 			}
 			response.setData(jsonResponse);
