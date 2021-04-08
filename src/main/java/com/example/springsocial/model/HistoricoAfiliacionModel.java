@@ -5,49 +5,56 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name="HISTORICO_AFILIACION", schema="WEBCERTIFICACION")
-@SequenceGenerator(name = "default_gen", sequenceName = "IDSERIEINVALIDO", allocationSize = 1)
+@Table(name="historico_afiliacion", schema="WEBCERTIFICACION")
 public class HistoricoAfiliacionModel implements Serializable{
 		
-	@Id	
-	@Column(name="CUI")
+	
+	@Column(name="cui")
 	private	String cui;
 	
-	@Column(name="NROBOLETA")
+	@Column(name="nroboleta")
 	private	Long numeroBoleta;
 	
-	@Column(name="ORGANIZACIONPOLITICA")
+	@Column(name="organizacionpolitica")
 	private	String organizacionPolitica;
 	
-	@Column(name="SIGLAS")
+	@Column(name="siglas")
 	private	String siglas;
 	
-	@Column(name="HOJA")
+	@Column(name="fechaafiliacion")
+	private	Date fechaDeAfiliacion;
+	@Id	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="hoja")
 	private	Long numeroHoja;	
 	
-	@Column(name="LINEA")
-	private	Long numeroLinea;	
+	@Column(name="linea")
+	private	Long numeroLinea;
 	
+	@Column(name="fechaoperacion")
+	private	Date fechaDeOperacion;
+	
+	@Column(name="fecharecepcion")
+	private	Date fechaDeRecepcion;
+	
+	@Column(name="fecharenuncia")
+	private	Date fechaDeRenuncia;
+
 	@Column(name="DOCUMENTORENUNCIA")
 	private	String documentoRenuncia;	
 	
-	@Column(name="FECHAAFILIACION")
-	private	Date fechaDeAfiliacion;
-	
-	@Column(name="FECHAOPERACION")
-	private	Date fechaDeOperacion;
-
-	@Column(name="FECHADEBAJA")
+	@Column(name="fechadebaja")
 	private	Date fechaDeBaja;
 	
-	@Column(name="FECHARENUNCIA")
-	private	Date fechaDeRenuncia;
+
 
 	public String getCui() {
 		return cui;
@@ -93,9 +100,10 @@ public class HistoricoAfiliacionModel implements Serializable{
 		return fechaDeRenuncia;
 	}
 
-	
-	
-	
+	public Date getFechaDeRecepcion() {
+		return fechaDeRecepcion;
+	}
+
 	
 	
 }

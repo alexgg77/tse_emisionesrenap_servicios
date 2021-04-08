@@ -14,15 +14,15 @@ import com.example.springsocial.model.HistoricoAfiliacionModel;
 
 @Repository
 @Transactional
-public interface HistorialAfiliacionRepository extends CrudRepository<HistoricoAfiliacionModel, Integer>, 
-PagingAndSortingRepository<HistoricoAfiliacionModel, Integer>, 
-JpaSpecificationExecutor<HistoricoAfiliacionModel>, 
-JpaRepository<HistoricoAfiliacionModel, Integer>, 
-CrudCustom<HistoricoAfiliacionModel> {	
-
+public interface HistorialAfiliacionRepository  <T>  
+	extends CrudRepository<HistoricoAfiliacionModel, Integer>, 
+			PagingAndSortingRepository<HistoricoAfiliacionModel, Integer>, 
+			JpaSpecificationExecutor<HistoricoAfiliacionModel>, 
+			JpaRepository<HistoricoAfiliacionModel, Integer>, 
+			CrudCustom<HistoricoAfiliacionModel> {	
 	
-	HistoricoAfiliacionModel findByCui(String cui);
-	List<HistoricoAfiliacionModel> findAllByCui(String cui);
-    boolean existsByCui(String cui);
+	//HistoricoAfiliacionModel findByCui(String cui);
+	//List<HistoricoAfiliacionModel> findAllByCui(String cui);
+    //boolean existsByCui(String cui);
 
 }
