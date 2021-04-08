@@ -58,20 +58,24 @@ public class HistorialAfiliadoController <T> implements CrudController{
 	
 	
 	@GetMapping("list/{cui}")
-    public RestResponse list(@CurrentUser UserPrincipal userPrincipal, 
-    		HttpServletRequest request,  @RequestParam("searchCriteria") Optional<String> searchCriteria, @RequestParam Optional<String> orderCriteria,
+    public RestResponse consultarHistorial(@CurrentUser UserPrincipal userPrincipal, 
+    		HttpServletRequest request,
     		@PathVariable String cui) throws Exception {
-			init();
-			
-			crud.setRequest(request);
-			crud.setUserPrincipal(userPrincipal);
-			searchCriteriaTools.clear();
-			searchCriteriaTools.setSearchCriteria(searchCriteria);
-			searchCriteriaTools.addIgualAnd("cui", cui);
-	    	crud.list(searchCriteriaTools.getSearchCriteria(), orderCriteria);
-	    	return crud.getResponse();
-	    }
 		
-		
-    }
+		RestResponse response = new RestResponse();
+		try {
+
+
+			boolean existCui = repository.existsByCui(cui);
+			if (!existCui) return new RestResponse(null,new CustomException("El cui ingresado no existe en los registros.",ErrorCode.REST_CREATE,this.getClass().getSimpleName(),0));
+			List list = repository.findAllByCui(cui);
+			response.setData(list);
+			}catch(Exception exception) {
+			CustomException customExcepction=  new CustomException(exception.getMessage(),exception,ErrorCode.REST_UPDATE,this.getClass().getSimpleName());
+			response.setError(customExcepction);
+			}
+    		return response;	
+    		}
 	
+	
+}

@@ -22,7 +22,7 @@ public interface HistorialAfiliacionRepository  <T>
 			CrudCustom<HistoricoAfiliacionModel> {	
 	
 	//HistoricoAfiliacionModel findByCui(String cui);
-	//List<HistoricoAfiliacionModel> findAllByCui(String cui);
-    //boolean existsByCui(String cui);
+	List<HistoricoAfiliacionModel> findAllByCui(String cui);
+    boolean existsByCui(String cui);
 
 }
