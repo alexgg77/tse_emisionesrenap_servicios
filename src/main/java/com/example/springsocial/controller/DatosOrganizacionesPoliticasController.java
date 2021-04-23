@@ -92,15 +92,13 @@ public class DatosOrganizacionesPoliticasController {
     }*/
 	
 	
-		@GetMapping("list/{cui}")
-	    public RestResponse openFile(@CurrentUser UserPrincipal userPrincipal,HttpServletRequest request,	@PathVariable String cui) throws Exception {
+		@GetMapping("list/{idop}")
+	    public RestResponse openFile(@CurrentUser UserPrincipal userPrincipal,HttpServletRequest request,	@PathVariable String idop) throws Exception {
 			RestResponse response=new RestResponse();
 			String splitData[];
 			JSONObject jsonResponse = new JSONObject();
-			try {			
-			String idop=repository.listUserCUI(Long.parseLong(cui));		    
-			List listado= repository.listUserData(idop);
-			int i=0;
+			try {								   
+			List listado= repository.listUserData(idop);			
 			if (!listado.isEmpty()) {
 				splitData = listado.get(0).toString().split(",");	
 				jsonResponse.put("name", splitData[0]);
@@ -129,12 +127,12 @@ public class DatosOrganizacionesPoliticasController {
 					System.out.println(	this.base64Image);
 					jsonResponse.put("base64", this.base64Image);
 			}}else {
-				return new RestResponse(null,new CustomException("CUI NO ASOCIADO A NINGUNA ORGANIZACIÓN POLITICA"
+				return new RestResponse(null,new CustomException("NO SE ENCONTRO NINGUNA ORGANIZACIÓN POLITICA"
 						+ "",ErrorCode.REST_CREATE,this.getClass().getSimpleName(),0));
 
 			}
 			
-			response.setData(listado);
+			response.setData(jsonResponse);
 			}catch(Exception ex) {
 				CustomException customExcepction=  new CustomException(ex.getMessage(),ex,ErrorCode.REST_UPDATE,this.getClass().getSimpleName());
 				response.setError(customExcepction);

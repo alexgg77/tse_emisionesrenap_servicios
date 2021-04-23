@@ -7,9 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.alibaba.fastjson.JSONObject;
-
 import com.example.springsocial.model.OrganizacionesPoliticas;
 
 @Repository
@@ -30,8 +27,6 @@ public interface OrganizacionesPoliticasRepository extends JpaRepository<Organiz
 			+"and a.nroboleta = d.nroboleta "
 			+"and d.cui = :cui",nativeQuery = true)
 	
-	
-	
 	List<String> listUserData(@Param("cui") String cui);*/
 	//Persona listarDatos(@Param("cui") String cui);
 	//List<OrganizacionesPoliticas> listUserData(@Param("cui") String cui);
@@ -44,12 +39,12 @@ public interface OrganizacionesPoliticasRepository extends JpaRepository<Organiz
 			+"where d1.coddep = o.coddep and d1.codmun = 0 and d2.coddep = o.coddep and d2.codmun = o.codmun and p.nroboleta = o.bolreplegal "
 			+"and r1.codigo = o.faseop and r1.objeto = 'FaseOP' and r2.codigo = o.statusop and r2.objeto = 'StatusOP'"
 			+"and o.idop = a.idop and d.nroboleta=a.nroboleta and o.idop=:idop",nativeQuery=true)
-	List<JSONObject> listUserData(@Param("idop") String op);
+	List<String> listUserData(@Param("idop") String op);
 	
-	@Query(value="select unique o.idop as idop from usuarios_op u , torgpoliticas o ,tdpi p, tafiliados a where a.idop=o.idop and p.nroboleta=a.nroboleta "
+	/*@Query(value="select unique o.idop as idop from usuarios_op u , torgpoliticas o ,tdpi p, tafiliados a where a.idop=o.idop and p.nroboleta=a.nroboleta "
 			+ "and u.cui=p.cui and u.cui=:cui union all select unique 'nulo' from dual where not exists(select unique o.idop as idop from usuarios_op u , torgpoliticas o ,tdpi p, tafiliados a where a.idop=o.idop and p.nroboleta=a.nroboleta "
 			+ "and u.cui=p.cui and u.cui=:cui)",nativeQuery=true)
-	String listUserCUI(@Param("cui") Long cui);
+	String listUserCUI(@Param("cui") Long cui);*/
 
 
 }
