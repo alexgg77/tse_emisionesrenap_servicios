@@ -38,8 +38,8 @@ public interface OrganizacionesPoliticasRepository extends JpaRepository<Organiz
 			+" as estado from tpadron p, tdpi d, tafiliados a, torgpoliticas o, trefdepmun d1, trefdepmun d2, trefstatusop r1, trefstatusop r2 "
 			+"where d1.coddep = o.coddep and d1.codmun = 0 and d2.coddep = o.coddep and d2.codmun = o.codmun and p.nroboleta = o.bolreplegal "
 			+"and r1.codigo = o.faseop and r1.objeto = 'FaseOP' and r2.codigo = o.statusop and r2.objeto = 'StatusOP'"
-			+"and o.idop = a.idop and d.nroboleta=a.nroboleta and o.idop=:idop",nativeQuery=true)
-	List<String> listUserData(@Param("idop") String op);
+			+"and o.idop = a.idop and d.nroboleta=a.nroboleta and o.nombreOp=:nombreOp",nativeQuery=true)
+	List<String> listUserData(@Param("nombreOp") String op);
 	
 	/*@Query(value="select unique o.idop as idop from usuarios_op u , torgpoliticas o ,tdpi p, tafiliados a where a.idop=o.idop and p.nroboleta=a.nroboleta "
 			+ "and u.cui=p.cui and u.cui=:cui union all select unique 'nulo' from dual where not exists(select unique o.idop as idop from usuarios_op u , torgpoliticas o ,tdpi p, tafiliados a where a.idop=o.idop and p.nroboleta=a.nroboleta "

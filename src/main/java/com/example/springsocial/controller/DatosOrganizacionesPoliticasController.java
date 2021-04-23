@@ -93,12 +93,12 @@ public class DatosOrganizacionesPoliticasController {
 	
 	
 		@GetMapping("list/{idop}")
-	    public RestResponse openFile(@CurrentUser UserPrincipal userPrincipal,HttpServletRequest request,	@PathVariable String idop) throws Exception {
+	    public RestResponse openFile(@CurrentUser UserPrincipal userPrincipal,HttpServletRequest request,	@PathVariable String nombreOp) throws Exception {
 			RestResponse response=new RestResponse();
 			String splitData[];
 			JSONObject jsonResponse = new JSONObject();
 			try {								   
-			List listado= repository.listUserData(idop);			
+			List listado= repository.listUserData(nombreOp);			
 			if (!listado.isEmpty()) {
 				splitData = listado.get(0).toString().split(",");	
 				jsonResponse.put("name", splitData[0]);
