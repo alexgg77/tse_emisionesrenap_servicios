@@ -43,8 +43,9 @@ public class DirectivoMandatarioController {
 				jsonResponse.put("nroboleta", splitData[1]);
 				jsonResponse.put("nombre", splitData[2]);
 				jsonResponse.put("status", splitData[3]);
-				jsonResponse.put("flagAfiliado", splitData[4]);
-				jsonResponse.put("cargo", splitData[5]);
+				jsonResponse.put("statusDescripcion", splitData[4]);
+				jsonResponse.put("flagAfiliado", splitData[5]);
+				jsonResponse.put("cargo", splitData[6]);
 		
 
 				
