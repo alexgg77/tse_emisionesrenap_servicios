@@ -15,7 +15,6 @@ import com.example.springsocial.api.ApiFiles;
 import com.example.springsocial.crud.ObjectSetGet;
 import com.example.springsocial.error.CustomException;
 import com.example.springsocial.error.ErrorCode;
-import com.example.springsocial.model.OrganizacionPolitica;
 import com.example.springsocial.repository.OrganizacionesPoliticasRepository;
 import com.example.springsocial.security.CurrentUser;
 import com.example.springsocial.security.UserPrincipal;
