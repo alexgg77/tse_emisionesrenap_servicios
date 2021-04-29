@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.springsocial.api.ApiFiles;
-import com.example.springsocial.crud.ObjectSetGet;
 import com.example.springsocial.error.CustomException;
 import com.example.springsocial.error.ErrorCode;
-import com.example.springsocial.model.OrganizacionPolitica;
 import com.example.springsocial.repository.OrganizacionesPoliticasRepository;
 import com.example.springsocial.security.CurrentUser;
 import com.example.springsocial.security.UserPrincipal;
@@ -89,16 +87,14 @@ public class DatosOrganizacionesPoliticasController {
 		}
 		
     	return response;
-    }*/
-	
-	
+    }*/		
 		@GetMapping("list/{idop}")
-	    public RestResponse openFile(@CurrentUser UserPrincipal userPrincipal,HttpServletRequest request,	@PathVariable String nombreOp) throws Exception {
+	    public RestResponse openFile(@CurrentUser UserPrincipal userPrincipal,HttpServletRequest request,	@PathVariable String idop) throws Exception {
 			RestResponse response=new RestResponse();
 			String splitData[];
 			JSONObject jsonResponse = new JSONObject();
 			try {								   
-			List listado= repository.listUserData(nombreOp);			
+			List listado= repository.listUserData(idop);			
 			if (!listado.isEmpty()) {
 				splitData = listado.get(0).toString().split(",");	
 				jsonResponse.put("name", splitData[0]);
