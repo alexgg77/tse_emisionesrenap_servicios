@@ -29,16 +29,17 @@ public class VerificarDatosPadronController {
 	@GetMapping("verificarAfiliacion/{cui}")
     public RestResponse openFile(@CurrentUser UserPrincipal userPrincipal, 
     		HttpServletRequest request,
-    		@PathVariable String cui) throws Exception {
+    		@PathVariable Long cui) throws Exception {
 		ObjectSetGet data= new ObjectSetGet();
 		JSONObject jsonResponse = new JSONObject();
 		String nroBoleta, splitData[];
 		RestResponse response = new RestResponse();
 		try {
 	
-			List list= repository.listUserData(cui);
+			//List list= repository.listUserData(cui);
+			List list = repository.listUserData(cui);
 			
-			if (list.size()>1) {
+			if (!list.isEmpty()) {
 				splitData = list.get(0).toString().split(",");	
 				jsonResponse.put("name", splitData[0]+" "+splitData[1]);
 				jsonResponse.put("codStatus", splitData[2]);

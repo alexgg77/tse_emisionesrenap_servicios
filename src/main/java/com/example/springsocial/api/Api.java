@@ -47,7 +47,7 @@ public class Api {
     }
 
     public Api() {
-    	this.apiUrl="http://192.168.79.67:9763"; 
+    	this.apiUrl=System.getenv("SSO_API_URL"); 
     	if  (!this.apiUrl.endsWith("/")) this.apiUrl+="/";
     	this.params=new JSONObject();
     	this.headerIsFormData=false;
