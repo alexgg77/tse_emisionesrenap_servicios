@@ -40,11 +40,6 @@ public interface OrganizacionesPoliticasRepository extends JpaRepository<Organiz
 			+"and r1.codigo = o.faseop and r1.objeto = 'FaseOP' and r2.codigo = o.statusop and r2.objeto = 'StatusOP'"
 			+"and o.idop = a.idop and d.nroboleta=a.nroboleta and o.idop=:idop",nativeQuery=true)
 	List<String> listUserData(@Param("idop") String op);
-	
-	/*@Query(value="select unique o.idop as idop from usuarios_op u , torgpoliticas o ,tdpi p, tafiliados a where a.idop=o.idop and p.nroboleta=a.nroboleta "
-			+ "and u.cui=p.cui and u.cui=:cui union all select unique 'nulo' from dual where not exists(select unique o.idop as idop from usuarios_op u , torgpoliticas o ,tdpi p, tafiliados a where a.idop=o.idop and p.nroboleta=a.nroboleta "
-			+ "and u.cui=p.cui and u.cui=:cui)",nativeQuery=true)
-	String listUserCUI(@Param("cui") Long cui);*/
 
 
 }
