@@ -51,7 +51,7 @@ public class DatosOrganizacionesPoliticasController {
 				jsonResponse.put("fase", splitData[9]);
 				jsonResponse.put("estado", splitData[10]);
 
-				String siglas = splitData[2].trim();
+				String siglas = splitData[1].trim();
 				String id = splitData[1];
 				if (id != null || id != "") {
 					apiFiles.clearParms();
@@ -62,7 +62,7 @@ public class DatosOrganizacionesPoliticasController {
 					responseTools.setValue("base64");
 					responseTools.getJsonValue();
 					this.base64Image=responseTools.getReturnedValue();
-					System.out.println(	this.base64Image);
+					//System.out.println(	this.base64Image);
 					jsonResponse.put("base64", this.base64Image);
 			}}else {
 				return new RestResponse(null,new CustomException("NO SE ENCONTRO NINGUNA ORGANIZACIÓN POLITICA"
