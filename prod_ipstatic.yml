@@ -16,7 +16,7 @@ services:
         - BD_USER=WEBCERTIFICACION
         - BD_PASSWORD=TDtu5#43A
         - SSO_API_URL=http://192.168.79.67:9762
-        - FILES_API_URL=http://192.168.79.131:3005
+        - FILES_API_URL=http://172.24.0.2:3005
       
 networks:
   default:
