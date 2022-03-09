@@ -15,6 +15,9 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import com.alibaba.fastjson.JSON;
 import com.example.springsocial.tools.RestResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -47,7 +50,8 @@ public class Api {
     }
 
     public Api() {
-    	this.apiUrl=System.getenv("SSO_API_URL"); 
+    	//this.apiUrl=System.getenv("SSO_API_URL"); 
+    	this.apiUrl="http://192.168.79.67:9763";
     	if  (!this.apiUrl.endsWith("/")) this.apiUrl+="/";
     	this.params=new JSONObject();
     	this.headerIsFormData=false;
@@ -99,6 +103,11 @@ public class Api {
 	public RestResponse getRestResponse() {
     	return JSON.parseObject(this.result,RestResponse.class);
     }
+	
+	public <T> T convertAtJSONTYPE(Class<T> ObjetoClase) throws JsonProcessingException {
+		Gson gson = new Gson();		
+		return gson.fromJson(this.result, ObjetoClase);		
+	}
    
 	
     public void sendPost() throws Exception {
@@ -123,7 +132,6 @@ public class Api {
         try (CloseableHttpClient httpClient = HttpClients.createDefault();
              CloseableHttpResponse response = httpClient.execute(request)) {
         	result = EntityUtils.toString(response.getEntity());
-        	System.out.println("result"+result);
         }
     }
 

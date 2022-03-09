@@ -112,7 +112,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/v2/api-docs**", "/webjars/**"
                          )
                         .permitAll()
-                    .antMatchers("/auth/**", "/oauth2/**","/municipio/**","/departamento/**","/solicitudUsuario/**").permitAll()
+                    .antMatchers("/auth/**", "/oauth2/**","/municipio/**","/departamento/**","/solicitudUsuario/**","/ssoAuth/**").permitAll()
                     .anyRequest()
                         .authenticated()
                     .and()

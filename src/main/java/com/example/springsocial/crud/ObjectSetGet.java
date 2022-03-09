@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.gson.Gson;
+
 public class ObjectSetGet {
 	private Object object;
 	private ArrayList<String> exceptValues = new ArrayList<>();
@@ -36,5 +39,11 @@ public class ObjectSetGet {
 	
 	public void addExceptValues(String attribute) {
 		exceptValues.add(attribute);
+	}
+	
+	public <T> T convertAtJSONTYPE(Class<T> ObjetoClase) throws JsonProcessingException {
+		Gson gson = new Gson();
+		String jsonStr = gson.toJson(this.object);
+		return gson.fromJson(jsonStr, ObjetoClase);		
 	}
 }
