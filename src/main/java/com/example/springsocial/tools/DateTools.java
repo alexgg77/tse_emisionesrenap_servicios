@@ -180,4 +180,20 @@ public class DateTools<T> {
 			  System.out.print("ex"+ex.toString());
 		  }
 	 }
+	  
+	  public Date fechaFormatoWs(String fecha){
+			Date formatfecha = null;
+			SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+			
+			if(!fecha.endsWith("null") && fecha!=null) {
+				try {
+					formatfecha = formato.parse(fecha.substring(0, 10));
+				} catch (ParseException e) {
+					formatfecha = null;
+				}
+			}
+			
+			System.out.println(""+formatfecha);
+		return formatfecha;
+	}
 }

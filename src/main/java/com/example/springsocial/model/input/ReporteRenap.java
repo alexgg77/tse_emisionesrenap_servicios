@@ -11,21 +11,24 @@ public class ReporteRenap {
 
 	private String  reportePDF;
 
-	private Long  departamento;
+	private String  departamento;
 
-	private Long municipio;
+	private String municipio;
 
-	private Long sede;
+	private String sede;
 
 	private String nombreSede;
 
-	private Long correlativoEnvío;
+	private String correlativoEnvío;
 
-	private Long registros;
+	private String registros;
 
-	private String fecha;
+	private String fechainicio;
+	
+	private String fechafin;
 	
 	private ArrayList<fallecidos> zfallecidos;
+	
 	
 
 	public ReporteRenap() {
@@ -43,15 +46,15 @@ public class ReporteRenap {
 		return reportePDF;
 	}
 
-	public Long getDepartamento() {
+	public String getDepartamento() {
 		return departamento;
 	}
 
-	public Long getMunicipio() {
+	public String getMunicipio() {
 		return municipio;
 	}
 
-	public Long getSede() {
+	public String getSede() {
 		return sede;
 	}
 
@@ -59,16 +62,16 @@ public class ReporteRenap {
 		return nombreSede;
 	}
 
-	public Long getCorrelativoEnvío() {
+	public String getCorrelativoEnvío() {
 		return correlativoEnvío;
 	}
 
-	public Long getRegistros() {
+	public String getRegistros() {
 		return registros;
 	}
 
-	public String getFecha() {
-		return fecha;
+	public ArrayList<fallecidos> getZfallecidos() {
+		return zfallecidos;
 	}
 
 	public void setCodigoRespuesta(String codigoRespuesta) {
@@ -83,15 +86,15 @@ public class ReporteRenap {
 		this.reportePDF = reportePDF;
 	}
 
-	public void setDepartamento(Long departamento) {
+	public void setDepartamento(String departamento) {
 		this.departamento = departamento;
 	}
 
-	public void setMunicipio(Long municipio) {
+	public void setMunicipio(String municipio) {
 		this.municipio = municipio;
 	}
 
-	public void setSede(Long sede) {
+	public void setSede(String sede) {
 		this.sede = sede;
 	}
 
@@ -99,25 +102,31 @@ public class ReporteRenap {
 		this.nombreSede = nombreSede;
 	}
 
-	public void setCorrelativoEnvío(Long correlativoEnvío) {
+	public void setCorrelativoEnvío(String correlativoEnvío) {
 		this.correlativoEnvío = correlativoEnvío;
 	}
 
-	public void setRegistros(Long registros) {
+	public void setRegistros(String registros) {
 		this.registros = registros;
-	}
-
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
-	}
-
-	public ArrayList<fallecidos> getZfallecidos() {
-		return zfallecidos;
 	}
 
 	public void setZfallecidos(ArrayList<fallecidos> zfallecidos) {
 		this.zfallecidos = zfallecidos;
 	}
 
-	
+	public String getFechainicio() {
+		return fechainicio;
+	}
+
+	public String getFechafin() {
+		return fechafin;
+	}
+
+	public void setFechainicio(String fechainicio) {
+		this.fechainicio = fechainicio;
+	}
+
+	public void setFechafin(String fechafin) {
+		this.fechafin = fechafin;
+	}
 }

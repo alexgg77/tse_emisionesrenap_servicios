@@ -2,7 +2,7 @@ package com.example.springsocial.model.input;
 
 public class fallecidos {
 	
-	private Integer cui;
+	private String cui;
 
     private String fecha_defuncion;
     
@@ -11,20 +11,20 @@ public class fallecidos {
 
     private String orden_cedula;
 
-    private Integer registro_cedula;
+    private String registro_cedula;
     
-    private Integer depto_extension;
+    private String depto_extension;
     
    
-    private Integer munic_extension;
+    private String munic_extension;
     
     private String fecha_nacimiento;
 
-    private Integer pais_nacimiento;
+    private String pais_nacimiento;
 
-    private Integer depto_nacimiento;
+    private String depto_nacimiento;
 
-    private Integer munic_nacimiento;
+    private String munic_nacimiento;
 
     private String genero;
 
@@ -40,17 +40,17 @@ public class fallecidos {
     
     private String apellido_casada;
     
-    private Long depto_inscripcion;
+    private String depto_inscripcion;
 
-    private Integer munic_inscripcion;
+    private String munic_inscripcion;
     
     private String numero_inscripcion_defuncion;
     
-    private Integer pais_defuncion;
+    private String pais_defuncion;
     
-    private Integer depto_defuncion;
+    private String depto_defuncion;
     
-    private Integer munic_defuncion;
+    private String munic_defuncion;
     
     private String causa_defuncion;
     
@@ -83,9 +83,8 @@ public class fallecidos {
     private String libro;
     
     
-    
 
-	public Integer getCui() {
+	public String getCui() {
 		return cui;
 	}
 
@@ -101,15 +100,15 @@ public class fallecidos {
 		return orden_cedula;
 	}
 
-	public Integer getRegistro_cedula() {
+	public String getRegistro_cedula() {
 		return registro_cedula;
 	}
 
-	public Integer getDepto_extension() {
+	public String getDepto_extension() {
 		return depto_extension;
 	}
 
-	public Integer getMunic_extension() {
+	public String getMunic_extension() {
 		return munic_extension;
 	}
 
@@ -117,15 +116,15 @@ public class fallecidos {
 		return fecha_nacimiento;
 	}
 
-	public Integer getPais_nacimiento() {
+	public String getPais_nacimiento() {
 		return pais_nacimiento;
 	}
 
-	public Integer getDepto_nacimiento() {
+	public String getDepto_nacimiento() {
 		return depto_nacimiento;
 	}
 
-	public Integer getMunic_nacimiento() {
+	public String getMunic_nacimiento() {
 		return munic_nacimiento;
 	}
 
@@ -157,11 +156,11 @@ public class fallecidos {
 		return apellido_casada;
 	}
 
-	public Long getDepto_inscripcion() {
+	public String getDepto_inscripcion() {
 		return depto_inscripcion;
 	}
 
-	public Integer getMunic_inscripcion() {
+	public String getMunic_inscripcion() {
 		return munic_inscripcion;
 	}
 
@@ -169,15 +168,15 @@ public class fallecidos {
 		return numero_inscripcion_defuncion;
 	}
 
-	public Integer getPais_defuncion() {
+	public String getPais_defuncion() {
 		return pais_defuncion;
 	}
 
-	public Integer getDepto_defuncion() {
+	public String getDepto_defuncion() {
 		return depto_defuncion;
 	}
 
-	public Integer getMunic_defuncion() {
+	public String getMunic_defuncion() {
 		return munic_defuncion;
 	}
 
@@ -241,7 +240,7 @@ public class fallecidos {
 		return libro;
 	}
 
-	public void setCui(Integer cui) {
+	public void setCui(String cui) {
 		this.cui = cui;
 	}
 
@@ -257,15 +256,15 @@ public class fallecidos {
 		this.orden_cedula = orden_cedula;
 	}
 
-	public void setRegistro_cedula(Integer registro_cedula) {
+	public void setRegistro_cedula(String registro_cedula) {
 		this.registro_cedula = registro_cedula;
 	}
 
-	public void setDepto_extension(Integer depto_extension) {
+	public void setDepto_extension(String depto_extension) {
 		this.depto_extension = depto_extension;
 	}
 
-	public void setMunic_extension(Integer munic_extension) {
+	public void setMunic_extension(String munic_extension) {
 		this.munic_extension = munic_extension;
 	}
 
@@ -273,15 +272,15 @@ public class fallecidos {
 		this.fecha_nacimiento = fecha_nacimiento;
 	}
 
-	public void setPais_nacimiento(Integer pais_nacimiento) {
+	public void setPais_nacimiento(String pais_nacimiento) {
 		this.pais_nacimiento = pais_nacimiento;
 	}
 
-	public void setDepto_nacimiento(Integer depto_nacimiento) {
+	public void setDepto_nacimiento(String depto_nacimiento) {
 		this.depto_nacimiento = depto_nacimiento;
 	}
 
-	public void setMunic_nacimiento(Integer munic_nacimiento) {
+	public void setMunic_nacimiento(String munic_nacimiento) {
 		this.munic_nacimiento = munic_nacimiento;
 	}
 
@@ -313,11 +312,11 @@ public class fallecidos {
 		this.apellido_casada = apellido_casada;
 	}
 
-	public void setDepto_inscripcion(Long depto_inscripcion) {
+	public void setDepto_inscripcion(String depto_inscripcion) {
 		this.depto_inscripcion = depto_inscripcion;
 	}
 
-	public void setMunic_inscripcion(Integer munic_inscripcion) {
+	public void setMunic_inscripcion(String munic_inscripcion) {
 		this.munic_inscripcion = munic_inscripcion;
 	}
 
@@ -325,15 +324,15 @@ public class fallecidos {
 		this.numero_inscripcion_defuncion = numero_inscripcion_defuncion;
 	}
 
-	public void setPais_defuncion(Integer pais_defuncion) {
+	public void setPais_defuncion(String pais_defuncion) {
 		this.pais_defuncion = pais_defuncion;
 	}
 
-	public void setDepto_defuncion(Integer depto_defuncion) {
+	public void setDepto_defuncion(String depto_defuncion) {
 		this.depto_defuncion = depto_defuncion;
 	}
 
-	public void setMunic_defuncion(Integer munic_defuncion) {
+	public void setMunic_defuncion(String munic_defuncion) {
 		this.munic_defuncion = munic_defuncion;
 	}
 

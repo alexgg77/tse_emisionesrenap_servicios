@@ -10,6 +10,7 @@ import javax.persistence.PersistenceUnit;
 import com.alibaba.fastjson.JSONObject;
 import com.example.springsocial.crud.ModelSetGetTransaction;
 import com.example.springsocial.crud.ObjectSetGet;
+import com.example.springsocial.model.twsDetalle;
 import com.example.springsocial.model.twsEncabezado;
 import com.example.springsocial.process.ProcesoReporteRenap;
 import com.example.springsocial.security.UserPrincipal;
@@ -26,7 +27,7 @@ public class InsercionReporteRenap {
 	private EntityManagerFactory entityManagerFactory;
 	private EntityTransaction transaction  = null;
 	private EntityManager entityManager = null;
-	
+
 	private SearchCriteriaTools searchCriteriaTools= new SearchCriteriaTools();
 	private ModelSetGetTransaction modelTransaction =new ModelSetGetTransaction();
 	private DateTools dateTools = new DateTools();
@@ -35,15 +36,16 @@ public class InsercionReporteRenap {
 	private RestResponse response;
 	private Logger logger = Logger.getLogger(InsercionReporteRenap.class.getName());
 	private String token;
-	
+
 	/* MODELOS */
 	private twsEncabezado modeloEncabezado;
-	
+	private twsDetalle modeloDetalle;
+
 	public void setData(Object createElement) {data.setObject(createElement);}
 	public void setUserPrincipal(UserPrincipal userPrincipal) {this.userPrincipal=userPrincipal;}
 	public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {if(entityManagerFactory!=null) this.entityManagerFactory=entityManagerFactory;}
 	public void setToken(String token) {	this.token = token;}
-	
+
 	private void startTransaction() {
 		this.entityManager = this.entityManagerFactory.createEntityManager();
 		this.transaction = this.entityManager.getTransaction();
@@ -53,17 +55,44 @@ public class InsercionReporteRenap {
 	private void confirmTransactionAndSetResult() {
 		transaction.commit();
 	}
-	
+
 	public void insert() throws JsonProcessingException {
+		modeloDetalle = new twsDetalle(); modeloEncabezado = new twsEncabezado();
 		JSONObject jsonObject=data.convertAtJSONTYPE(JSONObject.class);
-		
-		//JSONObject json = new JSONObject(array.get(0).toString());
-		
-		JSONObject json = (JSONObject) jsonObject.getJSONArray("zfallecidos").get(0);
-		JSONObject json1 = (JSONObject) jsonObject.getJSONArray("zfallecidos").get(1);
-		
-		logger.log(Level.INFO,"INSERCION ..."+json.get("cui"));
-		logger.log(Level.INFO,"INSERCION ..."+json1.get("cui"));
-		logger.log(Level.INFO,"INSERCION ...");
+
+		modeloEncabezado.setSede(jsonObject.getLong("sede"));
+		modeloEncabezado.setCorrelativoenvio(jsonObject.getLong("correlativoenvio"));
+		modeloEncabezado.setRegistros(jsonObject.getLong("registros"));
+		modeloEncabezado.setRegistrador(jsonObject.getString("registrador"));
+		modeloEncabezado.setFechainicio((jsonObject.getString("fechainicio")!=null && jsonObject.getString("fechainicio").length()>0)? dateTools.fechaFormatoWs(jsonObject.getString("fechainicio")):null);
+		modeloEncabezado.setFechafin((jsonObject.getString("fechainicio")!=null && jsonObject.getString("fechafin").length()>0)? dateTools.fechaFormatoWs(jsonObject.getString("fechafin")):null);
+		modeloEncabezado.setRutapdf(token);
+		modeloEncabezado.setFechacreacion(dateTools.get_CurrentDate());
+		modeloEncabezado.setEstadoprocesado(0l);
+
+		modelTransaction.saveWithFlush(modeloEncabezado);
+
+		for(int i=0;i<jsonObject.size();i++) {
+			JSONObject json = (JSONObject) jsonObject.getJSONArray("zfallecidos").get(i);
+
+		}
+
+	}
+
+	public void iniciarInsercion() {
+		try {
+			response= new RestResponse();
+			startTransaction();
+			insert();
+			confirmTransactionAndSetResult();
+			
+			response.setData("REPORTE INGRESADO CORRECTAMENTE");
+		}catch(Exception exception) {
+			transaction.rollback();
+			response.setError(exception.getMessage());
+		}finally{
+			if (entityManager.isOpen())	entityManager.close();
+		}
+
 	}
 }

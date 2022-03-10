@@ -56,6 +56,8 @@ public class ProcesoReporteRenap {
 	}
 	
 	public void procesar() throws JsonProcessingException {
+		insert.setToken(token);
+		insert.setEntityManagerFactory(entityManagerFactory);
 		insert.setData(element);
 		insert.insert();
 	}
