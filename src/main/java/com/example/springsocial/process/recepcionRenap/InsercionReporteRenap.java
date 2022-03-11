@@ -83,7 +83,7 @@ public class InsercionReporteRenap {
 			modeloDetalle.setFechacreacion(dateTools.get_CurrentDate());
 			modeloDetalle.setTipo_entrega(1l);
 			modeloDetalle.setFecha_defuncion((json.get("fecha_defuncion")!=null)? dateTools.fechaFormatoWs(json.getString("fecha_defuncion")):null);
-			modeloDetalle.setFecha_inscripcion_defuncion((json.get("fecha_inscripcion_defuncion")!=null)? dateTools.fechaFormatoWs(json.getString("fecha_inscripcion_defuncion")):null);
+			modeloDetalle.setFecha_inscripcion_defuncion((json.get("fecha_inscripcion_defuncion")!=null)? dateTools.fechaFormatoWs(json.getString("fecha_inscripcion_defuncion")):null); //NO PUEDE SER NULO
 			modeloDetalle.setOrden_cedula((json.get("orden_cedula")!=null)? json.getString("orden_cedula"):null);
 			modeloDetalle.setRegistro_cedula((json.get("registro_cedula")!=null)? json.getLong("registro_cedula"):null);
 			modeloDetalle.setDepto_extension((json.get("depto_extension")!=null)? json.getLong("depto_extension"):null);
@@ -100,9 +100,9 @@ public class InsercionReporteRenap {
 			modeloDetalle.setTercer_nombre((json.get("tercer_nombre")!=null)? json.getString("tercer_nombre"):null);
 			modeloDetalle.setApellido_casada((json.get("apellido_casada")!=null)? json.getString("apellido_casada"):null);
 			modeloDetalle.setCui((json.get("cui")!=null)? json.getLong("cui"):null);
-			modeloDetalle.setDepto_inscripcion((json.get("depto_inscripcion")!=null)? json.getLong("depto_inscripcion"):null);
-			modeloDetalle.setMpio_inscripcion((json.get("munic_inscripcion")!=null)? json.getLong("munic_inscripcion"):null);
-			modeloDetalle.setInscripcion_defuncion((json.get("numero_inscripcion_defuncion")!=null)? json.getLong("numero_inscripcion_defuncion"):null);
+			modeloDetalle.setDepto_inscripcion((json.get("depto_inscripcion")!=null)? json.getLong("depto_inscripcion"):null); //NO PUEDE SER NULO
+			modeloDetalle.setMpio_inscripcion((json.get("munic_inscripcion")!=null)? json.getLong("munic_inscripcion"):null); //NO PUEDE SER NULO
+			modeloDetalle.setInscripcion_defuncion((json.get("numero_inscripcion_defuncion")!=null)? json.getLong("numero_inscripcion_defuncion"):null); //NO PUEDE SER NULO
 			modeloDetalle.setPais_defuncion((json.get("pais_defuncion")!=null)? json.getLong("pais_defuncion"):null);
 			modeloDetalle.setDepto_defuncion((json.get("depto_defuncion")!=null)? json.getLong("depto_defuncion"):null);
 			modeloDetalle.setMpio_defuncion((json.get("munic_defuncion")!=null)? json.getLong("munic_defuncion"):null);			
