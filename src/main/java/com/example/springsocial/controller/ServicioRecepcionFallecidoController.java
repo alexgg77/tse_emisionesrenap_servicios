@@ -75,6 +75,7 @@ public class ServicioRecepcionFallecidoController {
 				procesar.setToken(authTokenHeader);
 				procesar.setUserPrincipal(userPrincipal);
 				procesar.procesar();
+			
 			if (procesar.getResponse().getError()!=null)throw new Exception(procesar.getResponse().getError().toString());
 			else {
 				response.setData(procesar.getResponse().getData());

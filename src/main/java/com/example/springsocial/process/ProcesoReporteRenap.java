@@ -7,10 +7,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceUnit;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.springsocial.crud.ModelSetGetTransaction;
 import com.example.springsocial.crud.ObjectSetGet;
 import com.example.springsocial.model.input.ReporteRenap;
 import com.example.springsocial.process.recepcionRenap.InsercionReporteRenap;
+import com.example.springsocial.process.recepcionRenap.subidaReporteRenap;
 import com.example.springsocial.security.UserPrincipal;
 import com.example.springsocial.tools.DateTools;
 import com.example.springsocial.tools.RestResponse;
@@ -35,8 +37,9 @@ public class ProcesoReporteRenap {
 	private RestResponse response;
 	private Logger logger = Logger.getLogger(ProcesoReporteRenap.class.getName());
 	private String token;
-	
-	private InsercionReporteRenap insert = new InsercionReporteRenap();
+	private JSONObject respuestasPasos;
+	private InsercionReporteRenap insert;
+	private subidaReporteRenap subirReporte;
 
 	public void setData(ReporteRenap createElement) {this.element = createElement;}
 	public void setUserPrincipal(UserPrincipal userPrincipal) {this.userPrincipal=userPrincipal;}
@@ -44,6 +47,13 @@ public class ProcesoReporteRenap {
 	public void setToken(String token) {	this.token = token;}
 	
 	public RestResponse getResponse() {return this.response; }
+	
+	private void init() {
+		insert = new InsercionReporteRenap();
+		subirReporte = new subidaReporteRenap();
+		respuestasPasos = new JSONObject();
+		response = new RestResponse();
+	}
 	
 	private void startTransaction() {
 		this.entityManager = this.entityManagerFactory.createEntityManager();
@@ -55,11 +65,19 @@ public class ProcesoReporteRenap {
 		transaction.commit();
 	}
 	
-	public void procesar() throws JsonProcessingException {
+	public void procesar() throws Exception {
+		init();
 		insert.setToken(token);
 		insert.setEntityManagerFactory(entityManagerFactory);
 		insert.setData(element);
-		insert.insert();
+		insert.iniciarInsercion();
+		respuestasPasos.put("insert",insert.getResponse());
+		
+		subirReporte.parametros(element.getSede(),element.getCorrelativoEnvio());
+		subirReporte.subirArchivo(element.getReportePDF());
+		respuestasPasos.put("archivo",subirReporte.Response());
+		
+		response.setData(respuestasPasos);
 	}
 	
 }

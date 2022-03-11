@@ -3,9 +3,9 @@ package com.example.springsocial.api;
 public class ApiFiles extends Api {
 		
 	public ApiFiles() {
-		setApiUrl(System.getenv("FILES_API_URL"));
+		//setApiUrl(System.getenv("FILES_API_URL"));
 
-		//setApiUrl("http://192.168.79.66:3005");
+		setApiUrl("http://192.168.79.66:3005");
 	}
 	
 	public void setGetPath(String type, String folder, String name) {		setPath("/file/get/"+ type + "/"+ folder +"/"+ name);	}

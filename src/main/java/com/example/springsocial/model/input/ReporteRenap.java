@@ -19,9 +19,11 @@ public class ReporteRenap {
 
 	private String nombreSede;
 
-	private String correlativoEnvío;
+	private String correlativoEnvio;
 
 	private String registros;
+	
+	private String registrador;
 
 	private String fechainicio;
 	
@@ -32,6 +34,14 @@ public class ReporteRenap {
 	
 
 	public ReporteRenap() {
+	}
+
+	public String getRegistrador() {
+		return registrador;
+	}
+
+	public void setRegistrador(String registrador) {
+		this.registrador = registrador;
 	}
 
 	public String getCodigoRespuesta() {
@@ -62,8 +72,8 @@ public class ReporteRenap {
 		return nombreSede;
 	}
 
-	public String getCorrelativoEnvío() {
-		return correlativoEnvío;
+	public String getCorrelativoEnvio() {
+		return correlativoEnvio;
 	}
 
 	public String getRegistros() {
@@ -102,8 +112,8 @@ public class ReporteRenap {
 		this.nombreSede = nombreSede;
 	}
 
-	public void setCorrelativoEnvío(String correlativoEnvío) {
-		this.correlativoEnvío = correlativoEnvío;
+	public void setCorrelativoEnvio(String correlativoEnvio) {
+		this.correlativoEnvio = correlativoEnvio;
 	}
 
 	public void setRegistros(String registros) {
