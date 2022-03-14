@@ -1,17 +1,40 @@
 package com.example.springsocial.process.recepcionRenap;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import com.alibaba.fastjson.JSONObject;
+import com.example.springsocial.crud.ObjectSetGet;
 import com.example.springsocial.model.CapturaInconvenientes;
+import com.example.springsocial.model.input.ReporteRenap;
+import com.example.springsocial.security.UserPrincipal;
 import com.example.springsocial.tools.DateTools;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 @SuppressWarnings({"rawtypes","unchecked","unused"})
 public class ValidacionReporteRenap {
+	private EntityManagerFactory entityManagerFactory;
+	private EntityTransaction transaction  = null;
+	private EntityManager entityManager = null;
+	private Logger logger = Logger.getLogger(ValidacionReporteRenap.class.getName());
 	private Integer numero = null;
 	private Date fecha = null;
 	private DateTools dateTools = new DateTools();
+	private ObjectSetGet data= new ObjectSetGet();
+	private UserPrincipal userPrincipal =null;
 	private CapturaInconvenientes captura;
+	private List<CapturaInconvenientes> listacaptura;
+	private List<Integer> listadoposiciones;
 	private JSONObject json, jsonEncabezado;
+	private boolean control = false, bandera=false;
+	
+	public void setData(ReporteRenap element) {data.setObject(element);}
+	public void setUserPrincipal(UserPrincipal userPrincipal) {this.userPrincipal=userPrincipal;}
+	public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {if(entityManagerFactory!=null) this.entityManagerFactory=entityManagerFactory;}
 	
 	private String [] keys = new String[] {
 			"cui",
@@ -139,98 +162,135 @@ public class ValidacionReporteRenap {
 			"10"
 	};
 	
-
-	public void setJSON(JSONObject json, JSONObject jsonEncabezado) {
-		this.json = json;
-		this.jsonEncabezado = jsonEncabezado;
+	public List<CapturaInconvenientes> getListaInconvenientes(){
+		return listacaptura;
 	}
 	
-	public void validarJson() {
-		
-		for(int i=0;i<keys.length;i++) {
-			validacion(tipos[i],json.getString(keys[i]),tamaños[i],keys[i]);
+	public List<Integer> getListadoPosiciones(){
+		return listadoposiciones;
+	}
+	
+	public void init() throws JsonProcessingException {
+		listadoposiciones = new ArrayList<Integer>();
+		listacaptura = new ArrayList<CapturaInconvenientes>();
+		this.jsonEncabezado=data.convertAtJSONTYPE(JSONObject.class);
+	}
+	
+	private void validarJson() {
+		for(int i=0;i<jsonEncabezado.getJSONArray("zfallecidos").size();i++) {
+			json = (JSONObject) jsonEncabezado.getJSONArray("zfallecidos").get(i);
+			for(int f =0;f<keys.length;f++) {
+				validacion(tipos[f],json.getString(keys[f]),tamaños[f],keys[f],i);
+				if(control==true && bandera==false) {
+					bandera = true;
+					listadoposiciones.add(i);
+				}
+			}
+			bandera = false;
+			control = false;
 		}
-		
 	}
 	
-	public void validacion(String tipo,String valor,String tamaño,String key) {
+	public void validacion(String tipo,String valor,String tamaño,String key,int posicion) {
 		switch(tipo) {
 		case "numero":
-			verificarnumero(valor,key);
+			verificarnumero(valor,key,posicion);
 			break;
 		case "cadena":
-			verificarcadena(valor, tamaño,key);
+			verificarcadena(valor, tamaño,key,posicion);
 			break;
 		case "fecha":
-			verificarfecha(valor,key);
+			verificarfecha(valor,key,posicion);
 			break;
 		}
 	}
 	
-	Integer  verificarnumero(String valor, String key){
+	void  verificarnumero(String valor, String key,int posicion){
 		captura = new CapturaInconvenientes();
-		Integer numero=null ;
+		Long numero=null ;
 		try {
 			if(valor!=null) {
-				numero = Integer.valueOf(valor);
+				numero = Long.valueOf(valor);
 			}else {
-				captura.setCorrelativoenvio(jsonEncabezado.getString("correlativoEnvio"));
-				captura.setCui(json.getString("cui"));
-				captura.setDescripcion(key);
-				captura.setNumeroinscripciondefuncion(json.getString("numero_inscripcion_defuncion"));
-				captura.setTipoinconsistencia("2");
+				if(key.equals("depto_inscripcion") || key.equals("munic_inscripcion") || key.equals("numero_inscripcion_defuncion")) {
+					control = true;
+					captura.setCorrelativoenvio(jsonEncabezado.getLong("correlativoEnvio"));
+					captura.setCui(json.getLong("cui"));
+					captura.setDescripcion("Campo: "+key+" valor:"+valor);
+					captura.setNumeroinscripciondefuncion(json.getLong("numero_inscripcion_defuncion"));
+					captura.setTipoinconsistencia(2l);
+					captura.setEstado(0l);
+					listacaptura.add(captura);
+				}
 			}
 		}catch(Exception e) {
-			numero = null;
+			control = true;
+			captura.setCorrelativoenvio(jsonEncabezado.getLong("correlativoEnvio"));
+			captura.setCui(json.getLong("cui"));
+			captura.setDescripcion("Campo: "+key+" valor:"+valor);
+			captura.setNumeroinscripciondefuncion(json.getLong("numero_inscripcion_defuncion"));
+			captura.setTipoinconsistencia(3l);
+			captura.setEstado(0l);
+			
+			listacaptura.add(captura);
 		}
 		
-		return numero;
 	}
 	
-	String  verificarcadena(String valor,String tamaño, String key){
+	void  verificarcadena(String valor,String tamaño, String key,int posicion){
 		captura = new CapturaInconvenientes();
 		String cadena = null;
-		try {
-			if(valor!=null) {
-				if(valor.length()>Integer.valueOf(tamaño)) {
-					
-				}
-			}else {
+
+		if(valor!=null) {
+			if(valor.length()>Integer.valueOf(tamaño)) {
+				control = true;
+				captura.setCorrelativoenvio(jsonEncabezado.getLong("correlativoEnvio"));
+				captura.setCui(json.getLong("cui"));
+				captura.setDescripcion("Campo: "+key+" valor:"+valor);
+				captura.setNumeroinscripciondefuncion(json.getLong("numero_inscripcion_defuncion"));
+				captura.setTipoinconsistencia(1l);
+				captura.setEstado(0l);
 				
+				listacaptura.add(captura);
 			}
-		}catch(Exception e) {
-			cadena = null;
 		}
-		
-		return cadena;
 	}
 	
-	Date verificarfecha(String valor, String key) {
+	void verificarfecha(String valor, String key,int posicion) {
 		captura = new CapturaInconvenientes();
 		Date fecha = null;
 		
-		if(valor!=null) {
+		if(valor!=null && valor.length()>0) {
 			fecha = dateTools.fechaFormatoWs(valor);
+			if(fecha==null) {
+				control = true;
+				captura.setCorrelativoenvio(jsonEncabezado.getLong("correlativoEnvio"));
+				captura.setCui(json.getLong("cui"));
+				captura.setDescripcion("Campo: "+key+" valor:"+valor);
+				captura.setNumeroinscripciondefuncion(json.getLong("numero_inscripcion_defuncion"));
+				captura.setTipoinconsistencia(3l);
+				captura.setEstado(0l);
+				
+				listacaptura.add(captura);
+			}
 		}else {
-			
+			if(key.equals("fecha_inscripcion_defuncion")) {
+				control = true;
+				captura.setCorrelativoenvio(jsonEncabezado.getLong("correlativoEnvio"));
+				captura.setCui(json.getLong("cui"));
+				captura.setDescripcion("Campo: "+key+" valor:"+valor);
+				captura.setNumeroinscripciondefuncion(json.getLong("numero_inscripcion_defuncion"));
+				captura.setTipoinconsistencia(2l);
+				captura.setEstado(0l);
+				
+				listacaptura.add(captura);
+			}
 		}
-		
-		return fecha;
+	}
+	
+	public void iniciarValidacion() throws JsonProcessingException {
+		init();
+		validarJson();
 	}
 	
 }
-
-/*
-if(json.get("fecha_inscripcion_defuncion")!=null) {	
-	fecha = dateTools.fechaFormatoWs(json.getString("fecha_inscripcion_defuncion"));
-}
-if(json.get("depto_inscripcion")!=null) {	
-	
-}
-if(json.get("munic_inscripcion")!=null) {	
-	
-}
-if(json.get("numero_inscripcion_defuncion")!=null) {	
-	
-}
- * */

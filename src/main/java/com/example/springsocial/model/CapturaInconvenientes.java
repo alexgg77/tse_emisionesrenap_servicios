@@ -1,50 +1,106 @@
 package com.example.springsocial.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@SuppressWarnings("serial")
+@Entity
+@Table(name="TWS_INCONSISTENCIAFALLE")
+@SequenceGenerator(name = "default_gen", sequenceName = "SEQ_IDINCONSISTENCIAFALLE", allocationSize = 1)
 public class CapturaInconvenientes {
 	
-	
-	private String correlativoenvio;
-	private String cui;
-	private String numeroinscripciondefuncion;
-	private String tipoinconsistencia;
+	@GeneratedValue(generator="default_gen")
+	@Id
+	@Column(name="idinconsistenciafalle")
+	private Long id;
+	@Column(name="corelativoenvio")
+	private Long correlativoenvio;
+	@Column(name="cui")
+	private Long cui;
+	@Column(name="numeroinscripciondefuncion")
+	private Long numeroinscripciondefuncion;
+	@Column(name="tipoinconsistencia")
+	private Long tipoinconsistencia;
+	@Column(name="descripcion")
 	private String descripcion;
+	@Column(name="estado")
+	private Long estado;
 	
 
 	public CapturaInconvenientes() {
 	}
-	
-	public String getCorrelativoenvio() {
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public Long getCorrelativoenvio() {
 		return correlativoenvio;
 	}
-	public String getCui() {
+
+
+	public void setCorrelativoenvio(Long correlativoenvio) {
+		this.correlativoenvio = correlativoenvio;
+	}
+
+
+	public Long getCui() {
 		return cui;
 	}
-	public String getNumeroinscripciondefuncion() {
+
+
+	public void setCui(Long cui) {
+		this.cui = cui;
+	}
+
+
+	public Long getNumeroinscripciondefuncion() {
 		return numeroinscripciondefuncion;
 	}
-	public String getTipoinconsistencia() {
+
+
+	public void setNumeroinscripciondefuncion(Long numeroinscripciondefuncion) {
+		this.numeroinscripciondefuncion = numeroinscripciondefuncion;
+	}
+
+
+	public Long getTipoinconsistencia() {
 		return tipoinconsistencia;
 	}
+
+
+	public void setTipoinconsistencia(Long tipoinconsistencia) {
+		this.tipoinconsistencia = tipoinconsistencia;
+	}
+
+
 	public String getDescripcion() {
 		return descripcion;
 	}
-	public void setCorrelativoenvio(String correlativoenvio) {
-		this.correlativoenvio = correlativoenvio;
-	}
-	public void setCui(String cui) {
-		this.cui = cui;
-	}
-	public void setNumeroinscripciondefuncion(String numeroinscripciondefuncion) {
-		this.numeroinscripciondefuncion = numeroinscripciondefuncion;
-	}
-	public void setTipoinconsistencia(String tipoinconsistencia) {
-		this.tipoinconsistencia = tipoinconsistencia;
-	}
+
+
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	
-	
-	
-	
+
+
+	public Long getEstado() {
+		return estado;
+	}
+
+
+	public void setEstado(Long estado) {
+		this.estado = estado;
+	}
 }
