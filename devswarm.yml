@@ -1,13 +1,12 @@
-version: "3.0"
+version: "3"
 services:
-    tse_servicio_recepcion_fallecidos:
-      container_name: tse_servicio_recepcion_fallecidos_dev
-      build:
-        context: .
-      image: tse_servicio_recepcion_fallecidos_dev
-      restart: unless-stopped
+    tse_servicio_recepcion_fallecidos_dev:
+      image: "tse_servicio_recepcion_fallecidos_dev:latest"
+      deploy:
+        replicas: 5
       ports:
-      - "5021:5021"
+       - "5021-5025:5021"
+      restart: unless-stopped
       networks:
       - default
       environment:
@@ -24,7 +23,3 @@ services:
       volumes:
          - /etc/localtime:/etc/localtime:ro
          - /etc/timezone:/etc/timezone:ro
-networks:
-  default:
-    external:
-      name: tse_internal
