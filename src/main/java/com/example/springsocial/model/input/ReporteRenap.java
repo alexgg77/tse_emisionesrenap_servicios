@@ -29,7 +29,7 @@ public class ReporteRenap {
 	
 	private String fechafin;
 	
-	private ArrayList<fallecidos> zfallecidos;
+	private ArrayList<fallecidos> fallecidos;
 	
 	
 
@@ -80,10 +80,6 @@ public class ReporteRenap {
 		return registros;
 	}
 
-	public ArrayList<fallecidos> getZfallecidos() {
-		return zfallecidos;
-	}
-
 	public void setCodigoRespuesta(String codigoRespuesta) {
 		this.codigoRespuesta = codigoRespuesta;
 	}
@@ -120,10 +116,6 @@ public class ReporteRenap {
 		this.registros = registros;
 	}
 
-	public void setZfallecidos(ArrayList<fallecidos> zfallecidos) {
-		this.zfallecidos = zfallecidos;
-	}
-
 	public String getFechainicio() {
 		return fechainicio;
 	}
@@ -138,5 +130,13 @@ public class ReporteRenap {
 
 	public void setFechafin(String fechafin) {
 		this.fechafin = fechafin;
+	}
+
+	public ArrayList<fallecidos> getFallecidos() {
+		return fallecidos;
+	}
+
+	public void setFallecidos(ArrayList<fallecidos> fallecidos) {
+		this.fallecidos = fallecidos;
 	}
 }

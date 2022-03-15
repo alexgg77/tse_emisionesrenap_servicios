@@ -84,20 +84,20 @@ public class InsercionReporteRenap {
 		modeloEncabezado.setRegistrador(jsonObject.getString("registrador"));
 		modeloEncabezado.setFechainicio((jsonObject.getString("fechainicio")!=null && jsonObject.getString("fechainicio").length()>0)? dateTools.fechaFormatoWs(jsonObject.getString("fechainicio")):null);
 		modeloEncabezado.setFechafin((jsonObject.getString("fechainicio")!=null && jsonObject.getString("fechafin").length()>0)? dateTools.fechaFormatoWs(jsonObject.getString("fechafin")):null);
-		modeloEncabezado.setRutapdf(jsonObject.getString("nombreSede")+"_"+jsonObject.getString("correlativoEnvio"));
+		modeloEncabezado.setRutapdf("SEDE_"+jsonObject.getString("sede")+","+jsonObject.getString("correlativoEnvio"));
 		modeloEncabezado.setFechacreacion(dateTools.get_CurrentDate());
 		modeloEncabezado.setEstadoprocesado(0l);
 		logger.log(Level.INFO,"Iniciando model transaction para: "+twsEncabezado.class.getName());
 		modelTransaction.saveWithFlush(modeloEncabezado);
 
 		logger.log(Level.INFO,"Iniciando insercion detalle de reporte");
-		for(int i=0;i<jsonObject.getJSONArray("zfallecidos").size();i++) {
+		for(int i=0;i<jsonObject.getJSONArray("fallecidos").size();i++) {
 			modeloDetalle = new twsDetalle();
 			logger.log(Level.INFO,"Iteracion listado fallecidos: "+i);
+			JSONObject json = (JSONObject) jsonObject.getJSONArray("fallecidos").get(i);
 			comprobarPosicion(i);
 			if(!control) {
 				logger.log(Level.INFO,"Definicion de modelo "+twsDetalle.class.getName());
-				JSONObject json = (JSONObject) jsonObject.getJSONArray("zfallecidos").get(i);
 				modeloDetalle.setIdencabezadofalle(modeloEncabezado.getId());
 				modeloDetalle.setFechacreacion(dateTools.get_CurrentDate());
 				modeloDetalle.setTipo_entrega(1l);
@@ -144,6 +144,7 @@ public class InsercionReporteRenap {
 				modelTransaction.saveWithFlush(modeloDetalle);
 			}else {
 				control = false;
+				logger.log(Level.INFO,"EN LA ITERACION: "+i+" EL CUI: "+json.get("cui")+" Y NUMERO DE INSCRIPCION DEFUNCION: ");
 			}
 		}
 

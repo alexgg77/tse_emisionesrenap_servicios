@@ -177,8 +177,8 @@ public class ValidacionReporteRenap {
 	}
 	
 	private void validarJson() {
-		for(int i=0;i<jsonEncabezado.getJSONArray("zfallecidos").size();i++) {
-			json = (JSONObject) jsonEncabezado.getJSONArray("zfallecidos").get(i);
+		for(int i=0;i<jsonEncabezado.getJSONArray("fallecidos").size();i++) {
+			json = (JSONObject) jsonEncabezado.getJSONArray("fallecidos").get(i);
 			for(int f =0;f<keys.length;f++) {
 				validacion(tipos[f],json.getString(keys[f]),tamaños[f],keys[f],i);
 				if(control==true && bandera==false) {
@@ -209,7 +209,7 @@ public class ValidacionReporteRenap {
 		captura = new CapturaInconvenientes();
 		Long numero=null ;
 		try {
-			if(valor!=null) {
+			if(valor!=null && valor.length()>0) {
 				numero = Long.valueOf(valor);
 			}else {
 				if(key.equals("depto_inscripcion") || key.equals("munic_inscripcion") || key.equals("numero_inscripcion_defuncion")) {
@@ -241,7 +241,7 @@ public class ValidacionReporteRenap {
 		captura = new CapturaInconvenientes();
 		String cadena = null;
 
-		if(valor!=null) {
+		if(valor!=null && valor.length()>0) {
 			if(valor.length()>Integer.valueOf(tamaño)) {
 				control = true;
 				captura.setCorrelativoenvio(jsonEncabezado.getLong("correlativoEnvio"));
