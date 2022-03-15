@@ -24,13 +24,13 @@ public class subidaReporteRenap {
 	}
 
 	private void subirReporteRenapPdf(String base64) throws Exception {
-		logger.log(Level.INFO,"SUBIENDO CONSTANCIA DE APROBACION DE EMPADRONAMIENTO");
+		logger.log(Level.INFO,"SUBIENDO REPORTE DE FALLECIDOS ENVIADO POR RENAP");
 		String archivoDescargado = null, respuestaSubida=null;
 		apiArchivos.setNombre(correlativoEnvio);
 		apiArchivos.setTypeFile("pdf");
 		apiArchivos.setBase64("data:application/pdf;base64,"+base64);
 		apiArchivos.setFolder(sedetxt+sede);
-		apiArchivos.setTipo("constancias_empadronamiento_renap_dev");
+		apiArchivos.setTipo("reportes_fallecidos_renap_dev");
 							 
 		apiArchivos.descargarArchivo();
 		archivoDescargado = apiArchivos.getArchivoDescargado();
