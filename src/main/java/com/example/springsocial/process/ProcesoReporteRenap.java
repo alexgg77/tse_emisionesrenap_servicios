@@ -1,5 +1,6 @@
 package com.example.springsocial.process;
 
+import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import com.example.springsocial.crud.ModelSetGetTransaction;
 import com.example.springsocial.crud.ObjectSetGet;
 import com.example.springsocial.model.CapturaInconvenientes;
 import com.example.springsocial.model.input.ReporteRenap;
+import com.example.springsocial.process.recepcionRenap.GenerarBackupReporteRenap;
 import com.example.springsocial.process.recepcionRenap.InsercionReporteRenap;
 import com.example.springsocial.process.recepcionRenap.ValidacionReporteRenap;
 import com.example.springsocial.process.recepcionRenap.subidaReporteRenap;
@@ -44,11 +46,12 @@ public class ProcesoReporteRenap {
 	private ReporteRenap element;
 	private RestResponse response;
 	private Logger logger = Logger.getLogger(ProcesoReporteRenap.class.getName());
-	private String token;
+	private String token, base64Backup;
 	private JSONObject respuestasPasos;
 	private InsercionReporteRenap insert;
 	private ValidacionReporteRenap validarjson;
 	private subidaReporteRenap subirReporte;
+	private GenerarBackupReporteRenap backup;
 	private List<CapturaInconvenientes> listaIncovenientes;
 	private List<Integer> listadoposiciones;
 
@@ -60,11 +63,13 @@ public class ProcesoReporteRenap {
 	public RestResponse getResponse() {return this.response; }
 	
 	private void init() {
+		backup = new GenerarBackupReporteRenap();
 		validarjson = new ValidacionReporteRenap();
 		insert = new InsercionReporteRenap();
 		subirReporte = new subidaReporteRenap();
 		respuestasPasos = new JSONObject();
 		response = new RestResponse();
+		base64Backup = null;
 	}
 	
 	private void startTransaction() {
@@ -94,9 +99,23 @@ public class ProcesoReporteRenap {
 	}
 	
 	private void subirReporte() throws Exception {
-		subirReporte.parametros(element.getSede(),element.getCorrelativoEnvio());
-		subirReporte.subirArchivo(element.getReportePDF());
-		respuestasPasos.put("archivo",subirReporte.Response());
+		subirReporte.parametros(element.getReportePDF(),"1",element.getSede(),element.getCorrelativoEnvio());
+		subirReporte.subirArchivo();	
+		
+		subirReporte.parametros(base64Backup,"2",element.getSede(),element.getCorrelativoEnvio());
+		subirReporte.subirArchivo();
+		
+		//respuestasPasos.put("archivo",subirReporte.Response());
+	}
+	
+	private void registrarOperacioBitacora() {
+		
+	}
+	
+	private void generarBackup() throws JsonProcessingException, FileNotFoundException {
+		backup.setElement(element);
+		backup.backup();
+		base64Backup = backup.getBase64();
 	}
 	
 	public void procesar(){
@@ -104,7 +123,9 @@ public class ProcesoReporteRenap {
 			init();
 			validarJson();
 			insertarReporte();
+			generarBackup();
 			subirReporte();
+			registrarOperacioBitacora();
 			response.setData(respuestasPasos);
 		} catch (Exception e) {
 			e.printStackTrace();

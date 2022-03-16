@@ -139,4 +139,16 @@ public class ReporteRenap {
 	public void setFallecidos(ArrayList<fallecidos> fallecidos) {
 		this.fallecidos = fallecidos;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ReporteRenap [codigoRespuesta=").append(codigoRespuesta).append(", mensajeRespuesta=")
+				.append(mensajeRespuesta).append(", reportePDF=").append(reportePDF).append(", departamento=")
+				.append(departamento).append(", municipio=").append(municipio).append(", sede=").append(sede)
+				.append(", nombreSede=").append(nombreSede).append(", correlativoEnvio=").append(correlativoEnvio)
+				.append(", registros=").append(registros).append(", registrador=").append(registrador)
+				.append(", fechainicio=").append(fechainicio).append(", fechafin=").append(fechafin).append("]");
+		return builder.toString();
+	}
 }

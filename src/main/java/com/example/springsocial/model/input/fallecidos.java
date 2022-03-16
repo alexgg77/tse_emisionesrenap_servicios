@@ -83,6 +83,10 @@ public class fallecidos {
     private String libro;
     
     
+    
+
+	public fallecidos() {
+	}
 
 	public String getCui() {
 		return cui;
@@ -395,4 +399,36 @@ public class fallecidos {
 	public void setLibro(String libro) {
 		this.libro = libro;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("fallecidos [cui=").append(cui).append(", fecha_defuncion=").append(fecha_defuncion)
+				.append(", fecha_inscripcion_defuncion=").append(fecha_inscripcion_defuncion).append(", orden_cedula=")
+				.append(orden_cedula).append(", registro_cedula=").append(registro_cedula).append(", depto_extension=")
+				.append(depto_extension).append(", munic_extension=").append(munic_extension)
+				.append(", fecha_nacimiento=").append(fecha_nacimiento).append(", pais_nacimiento=")
+				.append(pais_nacimiento).append(", depto_nacimiento=").append(depto_nacimiento)
+				.append(", munic_nacimiento=").append(munic_nacimiento).append(", genero=").append(genero)
+				.append(", primer_nombre=").append(primer_nombre).append(", segundo_nombre=").append(segundo_nombre)
+				.append(", tercer_nombre=").append(tercer_nombre).append(", primer_apellido=").append(primer_apellido)
+				.append(", segundo_apellido=").append(segundo_apellido).append(", apellido_casada=")
+				.append(apellido_casada).append(", depto_inscripcion=").append(depto_inscripcion)
+				.append(", munic_inscripcion=").append(munic_inscripcion).append(", numero_inscripcion_defuncion=")
+				.append(numero_inscripcion_defuncion).append(", pais_defuncion=").append(pais_defuncion)
+				.append(", depto_defuncion=").append(depto_defuncion).append(", munic_defuncion=")
+				.append(munic_defuncion).append(", causa_defuncion=").append(causa_defuncion)
+				.append(", primer_nombre_madre=").append(primer_nombre_madre).append(", segundo_nombre_madre=")
+				.append(segundo_nombre_madre).append(", tercer_nombre_madre=").append(tercer_nombre_madre)
+				.append(", primer_apellido_madre=").append(primer_apellido_madre).append(", segundo_apellido_madre=")
+				.append(segundo_apellido_madre).append(", apellido_casada_madre=").append(apellido_casada_madre)
+				.append(", primer_nombre_padre=").append(primer_nombre_padre).append(", segundo_nombre_padre=")
+				.append(segundo_nombre_padre).append(", tercer_nombre_padre=").append(tercer_nombre_padre)
+				.append(", primer_apellido_padre=").append(primer_apellido_padre).append(", segundo_apellido_padre=")
+				.append(segundo_apellido_padre).append(", folio=").append(folio).append(", partida=").append(partida)
+				.append(", libro=").append(libro).append("]\n");
+		return builder.toString();
+	}
+	
+	
 }

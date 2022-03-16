@@ -8,14 +8,16 @@ public class subidaReporteRenap {
 
 	private ServicioArchivos apiArchivos;
 	private Logger logger=Logger.getLogger(subidaReporteRenap.class.getName());
-	private String sede, correlativoEnvio;
+	private String nombreCarpeta, nombreArchivo, tipo, base64;
 	private boolean respuesta;
-	private static String sedetxt = "SEDE_";
+	private static String sedetxt = "SEDE_",sedeBackup="BACKUP_", datapplication="data:application/pdf;base64,",datapplicationBackup="data:text/plain;base64,", loggerstatic="REPORTE DE FALLECIDOS ENVIADO POR RENAP", loggerstaticBakcup="COPIA DE REPORTE DE FALLECIDOS ENVIADO POR RENAP COMO BACKUP";
 	public boolean Response() {return respuesta;}
 	
-	public void parametros(String sede, String correlativoEnvio) {
-		this.sede = sede;
-		this.correlativoEnvio= correlativoEnvio;
+	public void parametros(String base64, String tipo ,String nombreCarpeta, String nomreArchivo) {
+		this.nombreCarpeta = nombreCarpeta;
+		this.nombreArchivo = nomreArchivo;
+		this.tipo = tipo;
+		this.base64 = base64;
 	}
 	
 	private void init() {
@@ -23,13 +25,19 @@ public class subidaReporteRenap {
 		respuesta = false;
 	}
 
-	private void subirReporteRenapPdf(String base64) throws Exception {
-		logger.log(Level.INFO,"SUBIENDO REPORTE DE FALLECIDOS ENVIADO POR RENAP");
-		String archivoDescargado = null, respuestaSubida=null;
-		apiArchivos.setNombre(correlativoEnvio);
-		apiArchivos.setTypeFile("pdf");
-		apiArchivos.setBase64("data:application/pdf;base64,"+base64);
-		apiArchivos.setFolder(sedetxt+sede);
+	private void subirReporteRenapPdf() throws Exception {
+		String archivoDescargado = null, carpeta=null, dataApplication= null, textologger=null, tipoarchivo=null;
+		carpeta = (tipo.equals("1"))? sedetxt:sedeBackup;
+		dataApplication = (tipo.equals("1"))? datapplication:datapplicationBackup;
+		textologger = (tipo.equals("1"))? loggerstatic:loggerstaticBakcup;
+		tipoarchivo = (tipo.equals("1"))? "pdf":"txt";
+		
+		logger.log(Level.INFO,"SUBIENDO "+textologger);
+		
+		apiArchivos.setNombre(nombreArchivo);
+		apiArchivos.setTypeFile(tipoarchivo);
+		apiArchivos.setBase64(dataApplication+base64);
+		apiArchivos.setFolder(carpeta+nombreCarpeta);
 		apiArchivos.setTipo("reportes_fallecidos_renap_dev");
 							 
 		apiArchivos.descargarArchivo();
@@ -42,8 +50,8 @@ public class subidaReporteRenap {
 		}
 	}
 
-	public void subirArchivo(String base64) throws Exception {
+	public void subirArchivo() throws Exception {
 		init();
-		subirReporteRenapPdf(base64);
+		subirReporteRenapPdf();
 	}
 }

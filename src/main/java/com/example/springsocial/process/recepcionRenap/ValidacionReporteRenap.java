@@ -170,7 +170,7 @@ public class ValidacionReporteRenap {
 		return listadoposiciones;
 	}
 	
-	public void init() throws JsonProcessingException {
+	private void init() throws JsonProcessingException {
 		listadoposiciones = new ArrayList<Integer>();
 		listacaptura = new ArrayList<CapturaInconvenientes>();
 		this.jsonEncabezado=data.convertAtJSONTYPE(JSONObject.class);
@@ -191,7 +191,7 @@ public class ValidacionReporteRenap {
 		}
 	}
 	
-	public void validacion(String tipo,String valor,String tamaño,String key,int posicion) {
+	private void validacion(String tipo,String valor,String tamaño,String key,int posicion) {
 		switch(tipo) {
 		case "numero":
 			verificarnumero(valor,key,posicion);
