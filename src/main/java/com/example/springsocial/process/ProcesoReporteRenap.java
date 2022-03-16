@@ -98,14 +98,15 @@ public class ProcesoReporteRenap {
 		respuestasPasos.put("insert",insert.getResponse());
 	}
 	
-	private void subirReporte() throws Exception {
-		subirReporte.parametros(element.getReportePDF(),"1",element.getSede(),element.getCorrelativoEnvio());
-		subirReporte.subirArchivo();	
-		
-		subirReporte.parametros(base64Backup,"2",element.getSede(),element.getCorrelativoEnvio());
-		subirReporte.subirArchivo();
-		
-		//respuestasPasos.put("archivo",subirReporte.Response());
+	private void subirReporte() {
+		try {
+			subirReporte.parametros(element.getReportePDF(),"1",element.getSede(),element.getCorrelativoEnvio());
+			subirReporte.subirArchivo();
+			subirReporte.parametros(base64Backup,"2",element.getSede(),element.getCorrelativoEnvio());
+			subirReporte.subirArchivo();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}	
 	}
 	
 	private void registrarOperacioBitacora() {

@@ -39,14 +39,18 @@ public class subidaReporteRenap {
 		apiArchivos.setBase64(dataApplication+base64);
 		apiArchivos.setFolder(carpeta+nombreCarpeta);
 		apiArchivos.setTipo("reportes_fallecidos_renap_dev");
-							 
+		
 		apiArchivos.descargarArchivo();
 		archivoDescargado = apiArchivos.getArchivoDescargado();
 		
-		if(archivoDescargado.length()==0) {
-			logger.log(Level.INFO,"SUBIENDO BASE64");
-			apiArchivos.subidaDeArchivos();
-			respuesta = true;
+		logger.log(Level.INFO,"COMPROBANDO SI EXISTE YA EL ARCHIVO");
+		logger.log(Level.INFO,"archivoDescargado: "+archivoDescargado.length());
+		if(archivoDescargado!=null) {
+			if(archivoDescargado.length()==0) {
+				logger.log(Level.INFO,"SUBIENDO BASE64");
+				apiArchivos.subidaDeArchivos();
+				respuesta = true;
+			}
 		}
 	}
 
