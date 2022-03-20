@@ -44,7 +44,7 @@ public class ServicioRecepcionFallecidoController {
 	private ObjectSetGet data= new ObjectSetGet();
 	
 	
-	@ApiOperation(
+	@ApiOperation(	
             value = "Consulta de fallecidos.",
             notes = "Metodo devuelve que recibe un json"
     )
@@ -61,6 +61,9 @@ public class ServicioRecepcionFallecidoController {
 			@CurrentUser UserPrincipal userPrincipal, 
 			HttpServletRequest request) throws CustomException{
 		String authTokenHeader = request.getHeader("Authorization");
+		
+		//if(!userPrincipal.hasPermissionToRoute(request)) return new RestResponse(null, new CustomException("Acceso denegado", ErrorCode.ACCESS_DENIED,
+		//		this.getClass().getSimpleName(), 0));
 		
 		response = new RestResponse();
 		try {
@@ -88,5 +91,7 @@ public class ServicioRecepcionFallecidoController {
 		
 		return response;
 	}
+	
+	
 	
 }

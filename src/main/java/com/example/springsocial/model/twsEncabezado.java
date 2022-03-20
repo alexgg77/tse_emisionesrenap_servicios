@@ -41,8 +41,6 @@ public class twsEncabezado implements Serializable{
 	
 	
 	
-	
-	
 	public twsEncabezado(Long id, Long sede, Long correlativoenvio, Long registros, String registrador,
 			Date fechainicio, Date fechafin, String rutapdf, Date fechacreacion, Long estadoprocesado) {
 		this.id = id;
