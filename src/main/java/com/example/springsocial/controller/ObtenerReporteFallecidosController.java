@@ -65,11 +65,15 @@ public class ObtenerReporteFallecidosController {
 	private RestResponse response = new RestResponse();
 	private ObjectSetGet data= new ObjectSetGet();
 	
-	@GetMapping("listadoReporte")
+	@PreAuthorize("hasRole('USER')")
+	@GetMapping("list")
 	public RestResponse list(@CurrentUser UserPrincipal userPrincipal,HttpServletRequest request) {
-		response = new RestResponse();	
+		response = new RestResponse();
 		
 		try{
+			if(!userPrincipal.hasPermissionToRoute(request)) return new RestResponse(null, new CustomException("Acceso denegado", ErrorCode.ACCESS_DENIED,
+					this.getClass().getSimpleName(), 0));
+			
 			encabezadoModel = new twsEncabezado();
 			respuestaCustom = new CustomResponseReporte();
 			encabezadoModel = encabezadoReposiotry.obtenerEncabezado();
@@ -88,7 +92,7 @@ public class ObtenerReporteFallecidosController {
 	}
 	
 	@PreAuthorize("hasRole('USER')")
-	@PutMapping("modificar")
+	@PutMapping("update")
 	public RestResponse modificar(
 			@RequestBody Object element,
 			@CurrentUser UserPrincipal userPrincipal, 
@@ -99,6 +103,9 @@ public class ObtenerReporteFallecidosController {
 		response = new RestResponse();
 		update = new ProcesoUpdateEstadoReporte();
 		try {
+			if(!userPrincipal.hasPermissionToRoute(request)) return new RestResponse(null, new CustomException("Acceso denegado", ErrorCode.ACCESS_DENIED,
+					this.getClass().getSimpleName(), 0));
+			
 			update.setData(element);
 			update.setEntityManagerFactory(entityManagerFactory);
 			update.iniciarUpdate();

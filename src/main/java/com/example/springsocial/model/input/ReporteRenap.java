@@ -5,10 +5,6 @@ import java.util.ArrayList;
 
 public class ReporteRenap {
 	
-	private String codigoRespuesta;
-
-	private String  mensajeRespuesta;
-
 	private String  reportePDF;
 
 	private String  departamento;
@@ -22,34 +18,14 @@ public class ReporteRenap {
 	private String correlativoEnvio;
 
 	private String registros;
-	
-	private String registrador;
 
-	private String fechainicio;
-	
-	private String fechafin;
+	private String fecha;
 	
 	private ArrayList<fallecidos> fallecidos;
 	
 	
 
 	public ReporteRenap() {
-	}
-
-	public String getRegistrador() {
-		return registrador;
-	}
-
-	public void setRegistrador(String registrador) {
-		this.registrador = registrador;
-	}
-
-	public String getCodigoRespuesta() {
-		return codigoRespuesta;
-	}
-
-	public String getMensajeRespuesta() {
-		return mensajeRespuesta;
 	}
 
 	public String getReportePDF() {
@@ -80,14 +56,6 @@ public class ReporteRenap {
 		return registros;
 	}
 
-	public void setCodigoRespuesta(String codigoRespuesta) {
-		this.codigoRespuesta = codigoRespuesta;
-	}
-
-	public void setMensajeRespuesta(String mensajeRespuesta) {
-		this.mensajeRespuesta = mensajeRespuesta;
-	}
-
 	public void setReportePDF(String reportePDF) {
 		this.reportePDF = reportePDF;
 	}
@@ -116,22 +84,6 @@ public class ReporteRenap {
 		this.registros = registros;
 	}
 
-	public String getFechainicio() {
-		return fechainicio;
-	}
-
-	public String getFechafin() {
-		return fechafin;
-	}
-
-	public void setFechainicio(String fechainicio) {
-		this.fechainicio = fechainicio;
-	}
-
-	public void setFechafin(String fechafin) {
-		this.fechafin = fechafin;
-	}
-
 	public ArrayList<fallecidos> getFallecidos() {
 		return fallecidos;
 	}
@@ -140,15 +92,22 @@ public class ReporteRenap {
 		this.fallecidos = fallecidos;
 	}
 
+	public String getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("ReporteRenap [codigoRespuesta=").append(codigoRespuesta).append(", mensajeRespuesta=")
-				.append(mensajeRespuesta).append(", reportePDF=").append(reportePDF).append(", departamento=")
-				.append(departamento).append(", municipio=").append(municipio).append(", sede=").append(sede)
-				.append(", nombreSede=").append(nombreSede).append(", correlativoEnvio=").append(correlativoEnvio)
-				.append(", registros=").append(registros).append(", registrador=").append(registrador)
-				.append(", fechainicio=").append(fechainicio).append(", fechafin=").append(fechafin).append("]");
+		builder.append("ReporteRenap [reportePDF=").append(reportePDF).append(", departamento=").append(departamento)
+				.append(", municipio=").append(municipio).append(", sede=").append(sede).append(", nombreSede=")
+				.append(nombreSede).append(", correlativoEnvio=").append(correlativoEnvio).append(", registros=")
+				.append(registros).append(", fecha=").append(fecha).append(", fallecidos=").append(fallecidos)
+				.append("]");
 		return builder.toString();
 	}
 }

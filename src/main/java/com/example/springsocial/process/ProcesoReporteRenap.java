@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -17,10 +18,16 @@ import javax.persistence.PersistenceUnit;
 import com.alibaba.fastjson.JSONObject;
 import com.example.springsocial.crud.ModelSetGetTransaction;
 import com.example.springsocial.crud.ObjectSetGet;
+import com.example.springsocial.error.CustomException;
 import com.example.springsocial.model.CapturaInconvenientes;
+import com.example.springsocial.model.twsEncabezado;
 import com.example.springsocial.model.input.ReporteRenap;
+import com.example.springsocial.model.input.fallecidos;
+import com.example.springsocial.model.outputresponse.ResponseClassOperaciones;
 import com.example.springsocial.process.recepcionRenap.GenerarBackupReporteRenap;
 import com.example.springsocial.process.recepcionRenap.InsercionReporteRenap;
+import com.example.springsocial.process.recepcionRenap.RegistroOperacionBitacora;
+import com.example.springsocial.process.recepcionRenap.ValidacionCorrelativoEnvio;
 import com.example.springsocial.process.recepcionRenap.ValidacionReporteRenap;
 import com.example.springsocial.process.recepcionRenap.subidaReporteRenap;
 import com.example.springsocial.security.UserPrincipal;
@@ -52,8 +59,14 @@ public class ProcesoReporteRenap {
 	private ValidacionReporteRenap validarjson;
 	private subidaReporteRenap subirReporte;
 	private GenerarBackupReporteRenap backup;
+	private RegistroOperacionBitacora bitacora;
+	private ValidacionCorrelativoEnvio correlativo;
+	private ResponseClassOperaciones responseBackup, responseInsercion;
 	private List<CapturaInconvenientes> listaIncovenientes;
 	private List<Integer> listadoposiciones;
+	private Integer controlinserciones = null;
+	private twsEncabezado modeloEncabezado;
+	private ArrayList<fallecidos> fallecidos;
 
 	public void setData(ReporteRenap createElement) {this.element = createElement;}
 	public void setUserPrincipal(UserPrincipal userPrincipal) {this.userPrincipal=userPrincipal;}
@@ -63,6 +76,7 @@ public class ProcesoReporteRenap {
 	public RestResponse getResponse() {return this.response; }
 	
 	private void init() {
+		controlinserciones = 0;
 		backup = new GenerarBackupReporteRenap();
 		validarjson = new ValidacionReporteRenap();
 		insert = new InsercionReporteRenap();
@@ -70,6 +84,12 @@ public class ProcesoReporteRenap {
 		respuestasPasos = new JSONObject();
 		response = new RestResponse();
 		base64Backup = null;
+		responseBackup = new ResponseClassOperaciones();
+		responseInsercion = new ResponseClassOperaciones();
+		bitacora = new RegistroOperacionBitacora();
+		correlativo = new ValidacionCorrelativoEnvio();
+		modeloEncabezado = new twsEncabezado();
+		fallecidos = new ArrayList<fallecidos>();
 	}
 	
 	private void startTransaction() {
@@ -93,8 +113,9 @@ public class ProcesoReporteRenap {
 		insert.setData(element);
 		insert.setListados(listaIncovenientes, listadoposiciones);
 		insert.setEntityManagerFactory(entityManagerFactory);
-		
+		insert.setParametros(fallecidos, modeloEncabezado);
 		insert.iniciarInsercion();
+		responseInsercion = insert.getControlInsercion();
 		respuestasPasos.put("insert",insert.getResponse());
 	}
 	
@@ -110,18 +131,31 @@ public class ProcesoReporteRenap {
 	}
 	
 	private void registrarOperacioBitacora() {
-		
+		bitacora.setData(element);
+		bitacora.setEntityManagerFactory(entityManagerFactory);
+		bitacora.setParametros(responseBackup, responseInsercion, element.getFallecidos().size(),listaIncovenientes.size(),this.modeloEncabezado);
+		bitacora.iniciarBitacora();
 	}
 	
 	private void generarBackup() throws JsonProcessingException, FileNotFoundException {
 		backup.setElement(element);
 		backup.backup();
-		base64Backup = backup.getBase64();
+		responseBackup = backup.getResultados();
+		base64Backup = responseBackup.getBase64();
 	}
 	
-	public void procesar(){
+	private void validarCorrelativoEnvio() throws Exception, CustomException {
+		this.correlativo.setData(element);
+		this.correlativo.setEntityManagerFactory(entityManagerFactory);
+		this.correlativo.iniciarValidacion();
+		this.modeloEncabezado = this.correlativo.getModelo();
+		this.fallecidos = this.correlativo.getFallecidos();
+	}
+	
+	public void procesar() throws CustomException{
 		try {
 			init();
+			validarCorrelativoEnvio();
 			validarJson();
 			insertarReporte();
 			generarBackup();

@@ -46,13 +46,13 @@ public class ServicioRecepcionFallecidoController {
 	
 	@ApiOperation(	
             value = "Consulta de fallecidos.",
-            notes = "Metodo devuelve que recibe un json"
+            notes = "Metodo que recibe un json"
     )
 	@ApiResponses(value= {
 			@ApiResponse(code=400, message=" Bad request is received"),
 			@ApiResponse(code=500, message=" Server Error")
 	})
-	@PostMapping("recibirPaquete")
+	@PostMapping("create")
 	public RestResponse recibirPaquete(@Valid
 			@ApiParam(value="Objeto que contiene los datos necesario para obtener la informacion de cada registro, "
 					+ "Si los parametros son REQUERIDOS, ingresarlos para que el metodo funcione correctamente", required=false)
@@ -62,8 +62,8 @@ public class ServicioRecepcionFallecidoController {
 			HttpServletRequest request) throws CustomException{
 		String authTokenHeader = request.getHeader("Authorization");
 		
-		//if(!userPrincipal.hasPermissionToRoute(request)) return new RestResponse(null, new CustomException("Acceso denegado", ErrorCode.ACCESS_DENIED,
-		//		this.getClass().getSimpleName(), 0));
+		if(!userPrincipal.hasPermissionToRoute(request)) return new RestResponse(null, new CustomException("Acceso denegado", ErrorCode.ACCESS_DENIED,
+				this.getClass().getSimpleName(), 0));
 		
 		response = new RestResponse();
 		try {

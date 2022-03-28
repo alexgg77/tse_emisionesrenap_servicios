@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name="TWS_DETALLEFALLE")
+@Table(name="TWS_BITACORAFALLE")
 @SequenceGenerator(name = "default_gen", sequenceName = "SEQ_IDBITACORAFALLE", allocationSize = 1)
 public class twsBitacora implements Serializable{
 	

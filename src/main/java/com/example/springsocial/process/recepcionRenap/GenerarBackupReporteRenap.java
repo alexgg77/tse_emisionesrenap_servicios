@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Logger;
 
 import org.apache.commons.codec.binary.Base64;
@@ -14,6 +15,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.springsocial.crud.ObjectSetGet;
 import com.example.springsocial.model.CapturaInconvenientes;
 import com.example.springsocial.model.input.ReporteRenap;
+import com.example.springsocial.model.outputresponse.ResponseClassOperaciones;
 import com.example.springsocial.tools.DateTools;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -31,11 +33,17 @@ public class GenerarBackupReporteRenap {
 	private PrintWriter escribir;
 	private Base64 base64;
 	private InputStream inputStream;
+	private Integer totalRegistrosBackup;
+	private Date fechainicio, fechafin;
+	private ResponseClassOperaciones responseResultados;
 	
 	public void setData(ReporteRenap element) {data.setObject(element);}
 	public void setElement(ReporteRenap element) {this.elementrecibido = element;}
 	
 	private void init() throws JsonProcessingException {
+		this.totalRegistrosBackup = 0;
+		this.fechafin = null;
+		this.fechainicio = null;
 		this.inputStream = null;
 		this.encodedFile = null;
 		this.escribir = null;
@@ -43,13 +51,19 @@ public class GenerarBackupReporteRenap {
 		this.newRuta = null;
 		this.base64 = new Base64();
 		this.jsonEncabezado=data.convertAtJSONTYPE(JSONObject.class);
+		this.responseResultados = new ResponseClassOperaciones();
 	}
 	
-	public String getBase64() {
-		return encodedFile;
+	public ResponseClassOperaciones getResultados() {
+		responseResultados.setBase64(encodedFile);
+		responseResultados.setFechafin(fechafin);
+		responseResultados.setFechainicio(fechainicio);
+		responseResultados.setTotal(totalRegistrosBackup);
+		return responseResultados;
 	}
 	
 	private void ruta(String documento) {
+		fechainicio = dateTools.get_CurrentDate();
 		try{
 			String current = new java.io.File( "." ).getAbsolutePath();
 	        System.out.println("Current dir:"+current);
@@ -78,7 +92,8 @@ public class GenerarBackupReporteRenap {
 		} catch (Exception e) {
 			e.getMessage();
 		}
-		
+		fechafin = dateTools.get_CurrentDate();
+		totalRegistrosBackup = elementrecibido.getFallecidos().size();
 	}
 	
 	private void escribirBackup() throws FileNotFoundException {
@@ -91,6 +106,7 @@ public class GenerarBackupReporteRenap {
 		
 		escribir.flush();
 		escribir.close();
+		
 	}
 	
 	public void backup() throws JsonProcessingException, FileNotFoundException {

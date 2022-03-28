@@ -184,12 +184,18 @@ public class DateTools<T> {
 	  public Date fechaFormatoWs(String fecha){
 			Date formatfecha = null;
 			SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy");
 			
 			if(!fecha.endsWith("null") && fecha!=null) {
 				try {
 					formatfecha = formato.parse(fecha.substring(0, 10));
 				} catch (ParseException e) {
-					formatfecha = null;
+						try {
+							formatfecha = formato2.parse(fecha);
+						} catch (ParseException e1) {
+							// TODO Auto-generated catch block
+							formatfecha = null;
+						}
 				}
 			}
 			

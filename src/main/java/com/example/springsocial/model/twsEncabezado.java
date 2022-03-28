@@ -38,6 +38,10 @@ public class twsEncabezado implements Serializable{
 	private Date fechacreacion;
 	@Column(name="estadoprocesado")
 	private Long estadoprocesado;
+	@Column(name="coddepartamento")
+	private Long codigodepartamento;
+	@Column(name="codmunicipio")
+	private Long codigomunicipio;
 	
 	
 	
@@ -138,5 +142,21 @@ public class twsEncabezado implements Serializable{
 
 	public void setEstadoprocesado(Long estadoprocesado) {
 		this.estadoprocesado = estadoprocesado;
+	}
+
+	public Long getCodigodepartamento() {
+		return codigodepartamento;
+	}
+
+	public Long getCodigomunicipio() {
+		return codigomunicipio;
+	}
+
+	public void setCodigodepartamento(Long codigodepartamento) {
+		this.codigodepartamento = codigodepartamento;
+	}
+
+	public void setCodigomunicipio(Long codigomunicipio) {
+		this.codigomunicipio = codigomunicipio;
 	}
 }
