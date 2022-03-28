@@ -19,6 +19,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.springsocial.crud.ModelSetGetTransaction;
 import com.example.springsocial.crud.ObjectSetGet;
 import com.example.springsocial.error.CustomException;
+import com.example.springsocial.error.ErrorCode;
 import com.example.springsocial.model.CapturaInconvenientes;
 import com.example.springsocial.model.twsEncabezado;
 import com.example.springsocial.model.input.ReporteRenap;
@@ -102,7 +103,7 @@ public class ProcesoReporteRenap {
 		transaction.commit();
 	}
 	
-	private void validarJson() throws JsonProcessingException {
+	private void validarJson() throws Exception {
 		validarjson.setData(element);
 		validarjson.iniciarValidacion();
 		listaIncovenientes = validarjson.getListaInconvenientes();
@@ -163,7 +164,8 @@ public class ProcesoReporteRenap {
 			registrarOperacioBitacora();
 			response.setData(respuestasPasos);
 		} catch (Exception e) {
-			e.printStackTrace();
+			CustomException customExcepction= new CustomException(e.getMessage(),ErrorCode.REST_UPDATE,this.getClass().getSimpleName(), 0);
+			response.setError(customExcepction);
 		}		
 	}
 	

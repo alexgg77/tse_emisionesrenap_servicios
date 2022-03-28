@@ -68,10 +68,11 @@ public class ServicioRecepcionFallecidoController {
 		response = new RestResponse();
 		try {
 			data.setObject(element);
-			if(bindingresult.hasErrors()) {
-				return new RestResponse(null,new CustomException(bindingresult.getFieldError().getField()+": "+bindingresult.getFieldError().getDefaultMessage(),ErrorCode.REST_CREATE,this.getClass().getSimpleName(),0));
-			}
-			
+			if (data.getValue("departamento")==null || data.getValue("departamento")=="" ) return new RestResponse(null,new CustomException("El codigo departamento esta vacio, no se puede continuar la operacion",ErrorCode.REST_CREATE,this.getClass().getSimpleName(),0));
+			if (data.getValue("municipio")==null || data.getValue("municipio")=="" ) return  new RestResponse(null,new CustomException("El codigo municipo esta Vacio, no se puede continuar la operacion",ErrorCode.REST_CREATE,this.getClass().getSimpleName(),0));
+			if (data.getValue("correlativoEnvio")==null || data.getValue("correlativoEnvio")=="" || data.getValue("correlativoEnvio").toString().length()==0 ) return  new RestResponse(null,new CustomException("El codigo correlativoEnvio esta Vacio, no se puede continuar la operacion",ErrorCode.REST_CREATE,this.getClass().getSimpleName(),0));
+			if (data.getValue("fecha")==null || data.getValue("fecha")=="" ) return new RestResponse(null,new CustomException("La fecha esta Vacia, no se puede continuar la operacion",ErrorCode.REST_CREATE,this.getClass().getSimpleName(),0));
+						
 				ProcesoReporteRenap procesar = new ProcesoReporteRenap();	
 				procesar.setData(element);
 				procesar.setEntityManagerFactory(entityManagerFactory);

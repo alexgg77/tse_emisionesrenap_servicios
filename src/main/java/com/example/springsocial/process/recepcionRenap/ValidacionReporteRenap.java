@@ -9,10 +9,13 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import com.alibaba.fastjson.JSONObject;
 import com.example.springsocial.crud.ObjectSetGet;
+import com.example.springsocial.error.CustomException;
+import com.example.springsocial.error.ErrorCode;
 import com.example.springsocial.model.CapturaInconvenientes;
 import com.example.springsocial.model.input.ReporteRenap;
 import com.example.springsocial.security.UserPrincipal;
 import com.example.springsocial.tools.DateTools;
+import com.example.springsocial.tools.RestResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 @SuppressWarnings({"rawtypes","unchecked","unused"})
@@ -31,6 +34,7 @@ public class ValidacionReporteRenap {
 	private List<Integer> listadoposiciones;
 	private JSONObject json, jsonEncabezado;
 	private boolean control = false, bandera=false;
+	private RestResponse response;
 	
 	public void setData(ReporteRenap element) {data.setObject(element);}
 	public void setUserPrincipal(UserPrincipal userPrincipal) {this.userPrincipal=userPrincipal;}
@@ -205,6 +209,36 @@ public class ValidacionReporteRenap {
 		}
 	}
 	
+	void verificacionEncabezado() throws Exception {
+		if (data.getValue("reportePDF")==null || data.getValue("reportePDF")=="" || data.getValue("reportePDF").toString().length()==0 ) {
+			captura = new CapturaInconvenientes();
+			captura.setCorrelativoenvio(jsonEncabezado.getLong("correlativoEnvio"));
+			captura.setCui(null);
+			captura.setDescripcion("Campo: reportePDF  valor:"+null);
+			captura.setTipoinconsistencia(4l);
+			captura.setEstado(0l);
+			listacaptura.add(captura);
+		}
+		if (data.getValue("departamento")==null || data.getValue("departamento")=="" || data.getValue("departamento").toString().length()==0 ) {
+			captura = new CapturaInconvenientes();
+			captura.setCorrelativoenvio(jsonEncabezado.getLong("correlativoEnvio"));
+			captura.setCui(null);
+			captura.setDescripcion("Campo: departamento  valor:"+null);
+			captura.setTipoinconsistencia(2l);
+			captura.setEstado(0l);
+			listacaptura.add(captura);
+		}
+		if (data.getValue("municipio")==null || data.getValue("municipio")=="" || data.getValue("municipio").toString().length()==0 ) {
+			captura = new CapturaInconvenientes();
+			captura.setCorrelativoenvio(jsonEncabezado.getLong("correlativoEnvio"));
+			captura.setCui(null);
+			captura.setDescripcion("Campo: municipio  valor:"+null);
+			captura.setTipoinconsistencia(2l);
+			captura.setEstado(0l);
+			listacaptura.add(captura);
+		}
+	}
+	
 	void  verificarnumero(String valor, String key,int posicion){
 		captura = new CapturaInconvenientes();
 		Long numero=null ;
@@ -288,8 +322,9 @@ public class ValidacionReporteRenap {
 		}
 	}
 	
-	public void iniciarValidacion() throws JsonProcessingException {
+	public void iniciarValidacion() throws Exception {
 		init();
+		verificacionEncabezado();
 		validarJson();
 	}
 	

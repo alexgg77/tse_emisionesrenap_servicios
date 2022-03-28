@@ -106,8 +106,7 @@ public class ReporteRenap {
 		builder.append("ReporteRenap [reportePDF=").append(reportePDF).append(", departamento=").append(departamento)
 				.append(", municipio=").append(municipio).append(", sede=").append(sede).append(", nombreSede=")
 				.append(nombreSede).append(", correlativoEnvio=").append(correlativoEnvio).append(", registros=")
-				.append(registros).append(", fecha=").append(fecha).append(", fallecidos=").append(fallecidos)
-				.append("]");
+				.append(registros).append(", fecha=").append(fecha).append("]");
 		return builder.toString();
 	}
 }
