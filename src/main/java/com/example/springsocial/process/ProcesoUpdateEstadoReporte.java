@@ -71,6 +71,8 @@ public class ProcesoUpdateEstadoReporte {
 		encabezadoUpdate.setRegistros(encabezadoModel.getRegistros());
 		encabezadoUpdate.setRutapdf(encabezadoModel.getRutapdf());
 		encabezadoUpdate.setSede(encabezadoModel.getSede());
+		encabezadoUpdate.setCodigodepartamento(encabezadoModel.getCodigodepartamento());
+		encabezadoUpdate.setCodigomunicipio(encabezadoModel.getCodigomunicipio());
 		
 		modelTransaction.update(encabezadoUpdate);
 	}

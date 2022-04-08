@@ -102,8 +102,10 @@ public class InsercionReporteRenap {
 	private void comprobarInconveniente(JSONObject json) {
 		for(int i=0;i<listaIncovenientes.size();i++) {
 			logger.log(Level.INFO,"lista inconvenientes: "+listaIncovenientes.get(i).getNumeroinscripciondefuncion()+"  json: "+json.getString("numero_inscripcion_defuncion"));
-			if(listaIncovenientes.get(i).getNumeroinscripciondefuncion().toString().equals(json.getString("numero_inscripcion_defuncion")) ) {
-				control=true;
+			if(listaIncovenientes.get(i).getNumeroinscripciondefuncion()!=null) {
+				if(listaIncovenientes.get(i).getNumeroinscripciondefuncion().toString().equals(json.getString("numero_inscripcion_defuncion")) ) {
+					control=true;
+				}
 			}
 		}
 	}
